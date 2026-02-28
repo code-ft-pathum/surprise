@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Janani's Galaxy Odyssey</title>
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(ellipse at center, #0f001f 0%, #000000 70%);
+      --accent-cyan: #00d4ff;
+      --accent-blue: #0066cc;
+      --accent-gold: #ffd700;
+      --accent-red: #ff4040;
+      --text-glow: 0 0 20px rgba(0,212,255,0.6);
+      --shadow-soft: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-gradient);
+      font-family: 'Poppins', sans-serif;
+      color: #e0e0ff;
+      touch-action: none;
+      user-select: none;
+    }
+
+    /* Background effects */
+    .nebula {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 25% 35%, rgba(100,0,180,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(0,100,220,0.08) 0%, transparent 55%),
+        radial-gradient(circle at 45% 80%, rgba(180,0,140,0.07) 0%, transparent 45%);
+      opacity: 0.8;
+      animation: nebula-drift 120s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes nebula-drift {
+      0%,100% { transform: translate(0,0) scale(1.05); }
+      50%     { transform: translate(1.5%,2.5%) scale(1.1); }
+    }
+
+    .stars-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .star-layer {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(white 0.8px, transparent 0.8px);
+      background-size: 45px 45px;
+      opacity: 0.65;
+      animation: twinkle 20s infinite;
+    }
+    .star-layer:nth-child(2) { background-size: 70px 70px; opacity: 0.45; animation-duration: 30s; }
+    .star-layer:nth-child(3) { background-size: 110px 110px; opacity: 0.3; animation-duration: 45s; }
+    @keyframes twinkle { 0%,100%{opacity:0.65} 50%{opacity:0.3} }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 5px white;
+      animation: star-twinkle linear infinite;
+      pointer-events: none;
+    }
+    @keyframes star-twinkle {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%     { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .shooting-star {
+      position: absolute;
+      width: 2.5px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, white, transparent);
+      transform: rotate(-40deg);
+      opacity: 0;
+      pointer-events: none;
+      animation: shoot 6s linear infinite;
+    }
+    @keyframes shoot {
+      0%   { opacity:0; transform:translate(-100px,-100px) rotate(-40deg); }
+      5%   { opacity:1; }
+      15%  { opacity:1; }
+      20%  { opacity:0; transform:translate(150vw,150vh) rotate(-40deg); }
+      100% { opacity:0; }
+    }
+
+    /* Modern UI Elements */
+    #intro {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      z-index: 30;
+      transition: opacity 0.5s;
+    }
+    #intro.hidden { opacity: 0; pointer-events: none; }
+
+    #intro-title {
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: var(--text-glow);
+      margin-bottom: 20px;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100% { text-shadow: var(--text-glow); }
+      50%     { text-shadow: 0 0 40px rgba(0,212,255,0.9); }
+    }
+
+    #start-btn {
+      padding: 15px 40px;
+      font-size: 1.4rem;
+      background: linear-gradient(var(--accent-cyan), var(--accent-blue));
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft), 0 0 15px var(--accent-cyan);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #start-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--accent-cyan); }
+
+    #hud {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+      z-index: 10;
+    }
+
+    .hud-item {
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-shadow: 0 2px 4px black;
+    }
+
+    #progress-bar {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      z-index: 10;
+    }
+    #progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--accent-cyan), var(--accent-blue));
+      transition: width 0.5s linear;
+    }
+
+    #level-transition {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.8);
+      z-index: 25;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+    #level-transition.visible { opacity: 1; pointer-events: auto; }
+
+    #level-title {
+      font-size: clamp(2rem, 8vw, 4.5rem);
+      background: linear-gradient(90deg, #ffd700, #ff8c00);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 25px rgba(255,215,0,0.7);
+      margin-bottom: 15px;
+    }
+
+    #level-goal {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    #next-btn {
+      padding: 12px 35px;
+      font-size: 1.3rem;
+      background: linear-gradient(#ffd700, #ff8c00);
+      border: none;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft), 0 0 20px gold;
+      transition: transform 0.3s;
+    }
+    #next-btn:hover { transform: scale(1.05); }
+
+    /* Game Entities */
+    .orb {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--accent-cyan), var(--accent-blue) 80%);
+      box-shadow: 0 0 28px var(--accent-cyan), inset 0 0 15px white;
+      cursor: pointer;
+      z-index: 8;
+      transition: transform 0.25s ease;
+    }
+    .orb:hover { transform: scale(1.15); }
+
+    .power-up {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--accent-gold), orange);
+      box-shadow: 0 0 22px var(--accent-gold);
+      z-index: 8;
+      animation: pulse-power 2s infinite;
+    }
+    @keyframes pulse-power {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .enemy {
+      position: absolute;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, var(--accent-red), #8b0000);
+      box-shadow: 0 0 20px var(--accent-red);
+      z-index: 8;
+      animation: shake-enemy 0.5s infinite alternate;
+    }
+    @keyframes shake-enemy {
+      to { transform: translate(2px, 2px); }
+    }
+
+    .particle {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: explode 1s ease-out forwards;
+    }
+    @keyframes explode {
+      to { transform: translate(var(--dx), var(--dy)) scale(0.3); opacity: 0; }
+    }
+
+    .smoke {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,0.7), transparent);
+      pointer-events: none;
+      animation: fade 1.2s linear forwards;
+    }
+    @keyframes fade {
+      to { opacity:0; transform: scale(2.5) translateY(-20px); }
+    }
+
+    #final {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.85);
+      z-index: 20;
+      display: none;
+      padding: 25px;
+      text-align: center;
+    }
+
+    #final-title {
+      font-size: clamp(2.2rem, 9vw, 5rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: var(--text-glow);
+      margin-bottom: 20px;
+    }
+
+    #final-score {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+    }
+
+    #restart {
+      padding: 15px 40px;
+      font-size: 1.4rem;
+      background: linear-gradient(var(--accent-cyan), var(--accent-blue));
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft), 0 0 15px var(--accent-cyan);
+      transition: transform 0.3s;
+    }
+    #restart:hover { transform: scale(1.05); }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="nebula"></div>
+  <div class="stars-bg">
+    <div class="star-layer"></div>
+    <div class="star-layer"></div>
+    <div class="star-layer"></div>
+  </div>
+  <div id="shooting-stars"></div>
+
+  <div id="intro">
+    <div id="intro-title">Janani's Galaxy Odyssey</div>
+    <button id="start-btn">Embark on Adventure ✨</button>
+  </div>
+
+  <div id="hud" style="display:none;">
+    <div class="hud-item" id="score-hud">Score: 0</div>
+    <div class="hud-item" id="power-hud">Power: None</div>
+    <div class="hud-item" id="level-hud">Level: 1</div>
+    <div class="hud-item" id="time-hud">Time: 60</div>
+  </div>
+
+  <div id="progress-bar" style="display:none;">
+    <div id="progress-fill" style="width:100%;"></div>
+  </div>
+
+  <div id="level-transition" style="display:none;">
+    <div id="level-title">Level 1</div>
+    <div id="level-goal">Collect 10 orbs to advance! Beware of enemies.</div>
+    <button id="next-btn">Ready! 🚀</button>
+  </div>
+
+  <div id="final">
+    <div id="final-title"></div>
+    <div id="final-score"></div>
+    <button id="restart">Play Again</button>
+  </div>
+
+  <script>
+    // High score
+    let highScore = localStorage.getItem('jananiHigh') || 0;
+
+    // Game state
+    let score = 0;
+    let currentLevel = 1;
+    let maxLevels = 5;
+    let timeLeft = 0;
+    let baseTime = 60;
+    let powerEnd = 0;
+    let gameActive = false;
+    let entities = [];
+    let spawnIntervals = [];
+
+    const intro = document.getElementById('intro');
+    const hud = document.getElementById('hud');
+    const scoreHud = document.getElementById('score-hud');
+    const powerHud = document.getElementById('power-hud');
+    const levelHud = document.getElementById('level-hud');
+    const timeHud = document.getElementById('time-hud');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFill = document.getElementById('progress-fill');
+    const levelTransition = document.getElementById('level-transition');
+    const levelTitle = document.getElementById('level-title');
+    const levelGoal = document.getElementById('level-goal');
+    const nextBtn = document.getElementById('next-btn');
+    const final = document.getElementById('final');
+    const finalTitle = document.getElementById('final-title');
+    const finalScore = document.getElementById('final-score');
+    const restart = document.getElementById('restart');
+    const startBtn = document.getElementById('start-btn');
+
+    // Background enhancements
+    function addTwinkleStar() {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const sz = Math.random()*2 + 0.5;
+      s.style.width = s.style.height = sz+'px';
+      s.style.left = Math.random()*100+'%';
+      s.style.top  = Math.random()*100+'%';
+      const dur = Math.random()*5 + 3;
+      s.style.animation = `star-twinkle ${dur}s ${Math.random()*dur}s infinite`;
+      document.body.appendChild(s);
+    }
+    for(let i=0; i<250; i++) addTwinkleStar();
+
+    function shootStar() {
+      const el = document.createElement('div');
+      el.className = 'shooting-star';
+      el.style.left = Math.random()*40 + '%';
+      el.style.top  = Math.random()*30 + '%';
+      const dur = Math.random()*3 + 4;
+      el.style.animationDuration = dur + 's';
+      el.style.animationDelay = Math.random()*5 + 's';
+      document.getElementById('shooting-stars').appendChild(el);
+      setTimeout(()=>el.remove(), (dur+5)*1000);
+    }
+    setInterval(shootStar, 7000 + Math.random()*8000);
+    shootStar();
+
+    // Input
+    function getPos(e) {
+      const t = e.touches ? e.touches[0] : e;
+      return {x: t.clientX, y: t.clientY};
+    }
+
+    function createSmoke(x,y) {
+      const s = document.createElement('div');
+      s.className = 'smoke';
+      s.style.left = (x-20)+'px';
+      s.style.top  = (y-20)+'px';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 1200);
+    }
+
+    function createExplosion(x,y,color=`hsl(${Math.random()*360},95%,65%)`) {
+      for(let i=0;i<22;i++){
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = x+'px';
+        p.style.top  = y+'px';
+        p.style.background = color;
+        const ang = Math.random()*Math.PI*2;
+        const dist = Math.random()*100 + 40;
+        p.style.setProperty('--dx', Math.cos(ang)*dist+'px');
+        p.style.setProperty('--dy', Math.sin(ang)*dist+'px');
+        document.body.appendChild(p);
+        setTimeout(()=>p.remove(), 1000);
+      }
+    }
+
+    document.addEventListener('mousemove', e => createSmoke(e.clientX, e.clientY));
+    document.addEventListener('touchmove', e => {
+      e.preventDefault();
+      createSmoke(e.touches[0].clientX, e.touches[0].clientY);
+    }, {passive:false});
+
+    document.addEventListener('click', e => handleInteraction(getPos(e)));
+    document.addEventListener('touchstart', e => {
+      e.preventDefault();
+      handleInteraction(getPos(e));
+    }, {passive:false});
+
+    function handleInteraction({x,y}) {
+      if (!gameActive) return;
+
+      createExplosion(x,y);
+
+      entities = entities.filter(ent => {
+        const entCenterX = ent.x + ent.w / 2;
+        const entCenterY = ent.y + ent.h / 2;
+        if (Math.hypot(entCenterX - x, entCenterY - y) < 45) {
+          const expColor = ent.type === 'orb' ? 'cyan' : ent.type === 'power' ? 'gold' : 'red';
+          createExplosion(entCenterX, entCenterY, expColor);
+
+          if (ent.type === 'orb') {
+            score += Date.now() < powerEnd ? 2 : 1;
+          } else if (ent.type === 'power') {
+            powerEnd = Date.now() + 8000; // Longer power in higher levels
+          } else if (ent.type === 'enemy') {
+            score = Math.max(0, score - (currentLevel + 1));
+          }
+
+          ent.el.remove();
+          updateHUD();
+          checkProgress();
+          return false;
+        }
+        return true;
+      });
+    }
+
+    // Spawning
+    function spawn(type) {
+      const className = type === 'power' ? 'power-up' : type;
+      const el = document.createElement('div');
+      el.className = className;
+      const size = type === 'orb' ? 60 : type === 'power' ? 48 : 55;
+      el.style.left = Math.random() * (innerWidth - size - 20) + 10 + 'px';
+      el.style.top = Math.random() * (innerHeight - size - 120) + 60 + 'px';
+      document.body.appendChild(el);
+
+      const ent = {el, x: parseFloat(el.style.left), y: parseFloat(el.style.top), w: size, h: size, type};
+
+      if (type === 'enemy') {
+        ent.speed = (currentLevel * 0.5) + 1;
+        ent.direction = Math.random() * Math.PI * 2;
+        ent.interval = setInterval(() => moveEnemy(ent), 50);
+      }
+
+      entities.push(ent);
+
+      // Float animation
+      if (type !== 'power') {
+        el.animate([
+          {transform: 'translate(0,0)'},
+          {transform: `translate(${Math.random()*20-10}px, ${Math.random()*20-10}px)`}
+        ], {duration: 2500 + Math.random()*3000, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out'});
+      }
+
+      // Auto-despawn power-ups
+      if (type === 'power') setTimeout(() => removeEntity(ent), 12000);
+    }
+
+    function moveEnemy(ent) {
+      if (!gameActive || !entities.includes(ent)) return;
+
+      ent.x += Math.cos(ent.direction) * ent.speed;
+      ent.y += Math.sin(ent.direction) * ent.speed;
+
+      if (ent.x < 0 || ent.x > innerWidth - ent.w || ent.y < 50 || ent.y > innerHeight - ent.h - 50) {
+        ent.direction += Math.PI / 2 + Math.random() * Math.PI; // Bounce
+      }
+
+      ent.el.style.left = ent.x + 'px';
+      ent.el.style.top = ent.y + 'px';
+    }
+
+    function removeEntity(ent) {
+      if (entities.includes(ent)) {
+        ent.el.remove();
+        if (ent.interval) clearInterval(ent.interval);
+        entities = entities.filter(e => e !== ent);
+      }
+    }
+
+    // HUD update
+    function updateHUD() {
+      scoreHud.textContent = `Score: ${score}`;
+      powerHud.textContent = `Power: ${Date.now() < powerEnd ? 'Double Points' : 'None'}`;
+      levelHud.textContent = `Level: ${currentLevel}`;
+      timeHud.textContent = `Time: ${Math.ceil(timeLeft)}`;
+      progressFill.style.width = `${(timeLeft / (baseTime + (currentLevel - 1) * 10)) * 100}%`;
+    }
+
+    // Progress check
+    function checkProgress() {
+      const targetScore = currentLevel * 15 + 5; // Increasing difficulty
+      if (score >= targetScore && currentLevel < maxLevels) {
+        endLevel(true);
+      }
+    }
+
+    // Timer
+    let timerInterval;
+    function startTimer() {
+      timeLeft = baseTime + (currentLevel - 1) * 10;
+      updateHUD();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateHUD();
+        if (timeLeft <= 0) {
+          endLevel(false);
+        }
+      }, 1000);
+    }
+
+    // Level management
+    function startLevel() {
+      gameActive = true;
+      hud.style.display = 'flex';
+      progressBar.style.display = 'block';
+      levelTransition.classList.remove('visible');
+
+      // Difficulty scaling
+      const orbSpawnRate = 1800 - currentLevel * 200;
+      const powerSpawnRate = 10000 - currentLevel * 1000;
+      const enemySpawnRate = currentLevel >= 2 ? 6000 - currentLevel * 800 : 0;
+
+      spawnIntervals.push(setInterval(() => spawn('orb'), orbSpawnRate));
+      spawnIntervals.push(setInterval(() => { if (Math.random() < 0.3 + currentLevel*0.05) spawn('power'); }, powerSpawnRate));
+      if (enemySpawnRate > 0) spawnIntervals.push(setInterval(() => { if (Math.random() < 0.4 + currentLevel*0.1) spawn('enemy'); }, enemySpawnRate));
+
+      startTimer();
+    }
+
+    function endLevel(success) {
+      gameActive = false;
+      clearInterval(timerInterval);
+      spawnIntervals.forEach(clearInterval);
+      spawnIntervals = [];
+      entities.forEach(removeEntity);
+      entities = [];
+
+      if (!success) {
+        showFinal(false);
+        return;
+      }
+
+      currentLevel++;
+      if (currentLevel > maxLevels) {
+        showFinal(true);
+        return;
+      }
+
+      levelTitle.textContent = `Level ${currentLevel}`;
+      levelGoal.textContent = `Collect ${currentLevel * 15 + 5} points. More enemies and faster pace!`;
+      levelTransition.classList.add('visible');
+    }
+
+    function showFinal(won) {
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('jananiHigh', highScore);
+      }
+
+      final.style.display = 'flex';
+      finalTitle.textContent = won ? 'Galaxy Conquered! 🌌' : 'Mission Failed ⏰';
+      finalScore.innerHTML = `Score: ${score}<br>High Score: ${highScore}<br>${won ? 'You\'re a Cosmic Legend! 😎' : 'Better luck next time!'}`;
+      celebrate(won);
+    }
+
+    function celebrate(won) {
+      if (won) {
+        setInterval(() => createExplosion(Math.random()*innerWidth, Math.random()*innerHeight, 'gold'), 250);
+      }
+    }
+
+    // Event listeners
+    startBtn.onclick = () => {
+      intro.classList.add('hidden');
+      levelTransition.style.display = 'flex';
+      levelTransition.classList.add('visible');
+    };
+
+    nextBtn.onclick = startLevel;
+
+    restart.onclick = () => {
+      final.style.display = 'none';
+      score = 0;
+      currentLevel = 1;
+      intro.classList.remove('hidden');
+    };
+
+  </script>
+</body>
+</html>
