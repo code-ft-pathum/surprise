@@ -2,663 +2,799 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>Janani's Galaxy Odyssey</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bestie Sparkle Quest – Deluxe Edition 💖✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-gradient: radial-gradient(ellipse at center, #0f001f 0%, #000000 70%);
-      --accent-cyan: #00d4ff;
-      --accent-blue: #0066cc;
-      --accent-gold: #ffd700;
-      --accent-red: #ff4040;
-      --text-glow: 0 0 20px rgba(0,212,255,0.6);
-      --shadow-soft: 0 4px 15px rgba(0,0,0,0.5);
+      --pink-1: #ff79c6;
+      --pink-2: #ff6bcb;
+      --pink-3: #ff4da6;
+      --mint:   #a2f2e9;
+      --yellow: #fff76a;
+      --purple: #d0aaff;
+      --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #f5e1fd 50%, #e0f7fa 100%);
+      --card-bg: rgba(255,255,255,0.88);
+      --shadow-soft: 0 12px 32px rgba(255,105,180,0.22);
+      --shadow-glow: 0 0 28px rgba(255, 105, 180, 0.35);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
     body {
-      height: 100vh;
-      overflow: hidden;
+      font-family: 'Poppins', system-ui, sans-serif;
+      min-height: 100vh;
       background: var(--bg-gradient);
-      font-family: 'Poppins', sans-serif;
-      color: #e0e0ff;
-      touch-action: none;
+      background-size: 300% 300%;
+      animation: gradientFlow 18s ease infinite;
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientFlow {
+      0%   {background-position:0% 50%}
+      50%  {background-position:100% 50%}
+      100% {background-position:0% 50%}
+    }
+
+    .floating {
+      position: fixed;
+      font-size: clamp(1.4rem, 5vw, 3.2rem);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.7;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg);   opacity:0; }
+      10%  { opacity:0.7; }
+      90%  { opacity:0.7; }
+      100% { transform: translateY(-20vh) rotate(720deg); opacity:0; }
+    }
+
+    #container {
+      width:  min(94vw, 520px);
+      margin: 2vh auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft), inset 0 0 0 1px rgba(255,255,255,0.4);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress {
+      height: 8px;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--pink-1), var(--pink-3));
+      transition: width 0.9s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 16px var(--pink-1);
+    }
+
+    .screen {
+      display: none;
+      padding: clamp(20px, 6vw, 36px) clamp(16px, 5vw, 28px);
+      text-align: center;
+      animation: screenFade 0.6s ease-out;
+    }
+
+    .active { display: block; }
+
+    @keyframes screenFade {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0);   }
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 7vw, 3.4rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--pink-1), var(--pink-3), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.4em;
+      text-shadow: 0 4px 20px rgba(255,105,180,0.3);
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      color: var(--pink-2);
+      margin: 0.6em 0 0.8em;
+    }
+
+    .emoji-big { font-size: clamp(2.8rem, 9vw, 5.2rem); margin: 0.3em 0; }
+
+    button {
+      background: linear-gradient(135deg, var(--pink-1), var(--pink-3));
+      color: white;
+      border: none;
+      padding: clamp(14px,4vw,18px) clamp(28px,7vw,42px);
+      border-radius: 999px;
+      font-size: clamp(1rem, 4vw, 1.18rem);
+      font-weight: 600;
+      margin: 0.8em 0.5em;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255,105,180,0.4);
+      transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::after {
+      content:"";
+      position:absolute;
+      top:0; left:-100%;
+      width:100%; height:100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transition: left 0.6s;
+    }
+
+    button:hover::after { left:100%; }
+    button:hover     { transform: translateY(-4px) scale(1.06); box-shadow: 0 14px 36px rgba(255,105,180,0.55); }
+    button:active    { transform: scale(0.96); }
+
+    input, .guess-input {
+      width: 86%;
+      max-width: 380px;
+      padding: 14px 20px;
+      margin: 1.2em auto;
+      border: 2px solid #ffb3d9;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--pink-2);
+      box-shadow: 0 0 0 4px rgba(255,105,180,0.25);
+    }
+
+    .clue-box {
+      background: rgba(255,240,245,0.7);
+      border-left: 5px solid var(--pink-2);
+      padding: 1.2em 1.4em;
+      margin: 1.4em 0;
+      border-radius: 16px;
+      text-align: left;
+      font-style: italic;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .grid-4  { display:grid; grid-template-columns: repeat(2,1fr); gap:1.1rem; max-width:340px; margin:1.8em auto; }
+    .pad     { aspect-ratio:1; border-radius:50%; position:relative; box-shadow:0 6px 20px rgba(0,0,0,0.18); transition:all 0.25s; }
+    .pad.lit { transform:scale(1.14); box-shadow:0 0 40px #fff, inset 0 0 30px rgba(255,255,255,0.7); filter:brightness(1.3); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
+      gap: 1rem;
+      max-width: 92vw;
+      margin: 1.6em auto;
+    }
+
+    .card {
+      aspect-ratio: 1;
+      background: white;
+      border: 3px solid #ffb3d9;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      cursor: pointer;
       user-select: none;
     }
 
-    /* Background effects */
-    .nebula {
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(circle at 25% 35%, rgba(100,0,180,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 70% 60%, rgba(0,100,220,0.08) 0%, transparent 55%),
-        radial-gradient(circle at 45% 80%, rgba(180,0,140,0.07) 0%, transparent 45%);
-      opacity: 0.8;
-      animation: nebula-drift 120s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes nebula-drift {
-      0%,100% { transform: translate(0,0) scale(1.05); }
-      50%     { transform: translate(1.5%,2.5%) scale(1.1); }
-    }
+    .card.flipped  { transform: rotateY(180deg) scale(1.06); background: linear-gradient(135deg, var(--pink-1), var(--pink-3)); color:white; border-color:white; }
+    .card.matched  { background: linear-gradient(135deg, #a2f2e9, #7df2e2) !important; border-color:#4ade80; transform:scale(1.1); }
 
-    .stars-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .star-layer {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(white 0.8px, transparent 0.8px);
-      background-size: 45px 45px;
-      opacity: 0.65;
-      animation: twinkle 20s infinite;
-    }
-    .star-layer:nth-child(2) { background-size: 70px 70px; opacity: 0.45; animation-duration: 30s; }
-    .star-layer:nth-child(3) { background-size: 110px 110px; opacity: 0.3; animation-duration: 45s; }
-    @keyframes twinkle { 0%,100%{opacity:0.65} 50%{opacity:0.3} }
-
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 0 5px white;
-      animation: star-twinkle linear infinite;
-      pointer-events: none;
-    }
-    @keyframes star-twinkle {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50%     { opacity: 0.4; transform: scale(0.8); }
-    }
-
-    .shooting-star {
-      position: absolute;
-      width: 2.5px;
-      height: 60px;
-      background: linear-gradient(to bottom, transparent, white, transparent);
-      transform: rotate(-40deg);
-      opacity: 0;
-      pointer-events: none;
-      animation: shoot 6s linear infinite;
-    }
-    @keyframes shoot {
-      0%   { opacity:0; transform:translate(-100px,-100px) rotate(-40deg); }
-      5%   { opacity:1; }
-      15%  { opacity:1; }
-      20%  { opacity:0; transform:translate(150vw,150vh) rotate(-40deg); }
-      100% { opacity:0; }
-    }
-
-    /* Modern UI Elements */
-    #intro {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.6);
-      z-index: 30;
-      transition: opacity 0.5s;
-    }
-    #intro.hidden { opacity: 0; pointer-events: none; }
-
-    #intro-title {
-      font-size: clamp(2.5rem, 10vw, 6rem);
+    .level-win {
+      font-size: 1.5rem;
+      color: var(--pink-2);
       font-weight: 700;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: var(--text-glow);
-      margin-bottom: 20px;
-      animation: pulse-glow 4s ease-in-out infinite;
-    }
-    @keyframes pulse-glow {
-      0%,100% { text-shadow: var(--text-glow); }
-      50%     { text-shadow: 0 0 40px rgba(0,212,255,0.9); }
+      margin: 1.2em 0;
+      animation: pulse 1.6s infinite;
     }
 
-    #start-btn {
-      padding: 15px 40px;
-      font-size: 1.4rem;
-      background: linear-gradient(var(--accent-cyan), var(--accent-blue));
-      border: none;
-      border-radius: 30px;
-      color: white;
-      cursor: pointer;
-      box-shadow: var(--shadow-soft), 0 0 15px var(--accent-cyan);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    #start-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--accent-cyan); }
-
-    #hud {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
-      z-index: 10;
+    @keyframes pulse {
+      0%,100% { transform:scale(1);   text-shadow:0 0 12px #ffd1dc; }
+      50%     { transform:scale(1.08); text-shadow:0 0 28px var(--pink-1); }
     }
 
-    .hud-item {
-      font-size: 1.1rem;
-      font-weight: 500;
-      text-shadow: 0 2px 4px black;
+    @media (min-width: 600px) {
+      #container    { margin:4vh auto; border-radius:36px; }
+      .grid-4       { grid-template-columns: repeat(2,1fr); max-width:420px; }
+      .card-grid    { grid-template-columns: repeat(4,1fr); max-width:460px; }
     }
-
-    #progress-bar {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 6px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      overflow: hidden;
-      z-index: 10;
-    }
-    #progress-fill {
-      height: 100%;
-      background: linear-gradient(to right, var(--accent-cyan), var(--accent-blue));
-      transition: width 0.5s linear;
-    }
-
-    #level-transition {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.8);
-      z-index: 25;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s;
-    }
-    #level-transition.visible { opacity: 1; pointer-events: auto; }
-
-    #level-title {
-      font-size: clamp(2rem, 8vw, 4.5rem);
-      background: linear-gradient(90deg, #ffd700, #ff8c00);
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 25px rgba(255,215,0,0.7);
-      margin-bottom: 15px;
-    }
-
-    #level-goal {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    #next-btn {
-      padding: 12px 35px;
-      font-size: 1.3rem;
-      background: linear-gradient(#ffd700, #ff8c00);
-      border: none;
-      border-radius: 25px;
-      color: white;
-      cursor: pointer;
-      box-shadow: var(--shadow-soft), 0 0 20px gold;
-      transition: transform 0.3s;
-    }
-    #next-btn:hover { transform: scale(1.05); }
-
-    /* Game Entities */
-    .orb {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, var(--accent-cyan), var(--accent-blue) 80%);
-      box-shadow: 0 0 28px var(--accent-cyan), inset 0 0 15px white;
-      cursor: pointer;
-      z-index: 8;
-      transition: transform 0.25s ease;
-    }
-    .orb:hover { transform: scale(1.15); }
-
-    .power-up {
-      position: absolute;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, var(--accent-gold), orange);
-      box-shadow: 0 0 22px var(--accent-gold);
-      z-index: 8;
-      animation: pulse-power 2s infinite;
-    }
-    @keyframes pulse-power {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    .enemy {
-      position: absolute;
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, var(--accent-red), #8b0000);
-      box-shadow: 0 0 20px var(--accent-red);
-      z-index: 8;
-      animation: shake-enemy 0.5s infinite alternate;
-    }
-    @keyframes shake-enemy {
-      to { transform: translate(2px, 2px); }
-    }
-
-    .particle {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: explode 1s ease-out forwards;
-    }
-    @keyframes explode {
-      to { transform: translate(var(--dx), var(--dy)) scale(0.3); opacity: 0; }
-    }
-
-    .smoke {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,212,255,0.7), transparent);
-      pointer-events: none;
-      animation: fade 1.2s linear forwards;
-    }
-    @keyframes fade {
-      to { opacity:0; transform: scale(2.5) translateY(-20px); }
-    }
-
-    #final {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.85);
-      z-index: 20;
-      display: none;
-      padding: 25px;
-      text-align: center;
-    }
-
-    #final-title {
-      font-size: clamp(2.2rem, 9vw, 5rem);
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
-      -webkit-background-clip: text;
-      color: transparent;
-      text-shadow: var(--text-glow);
-      margin-bottom: 20px;
-    }
-
-    #final-score {
-      font-size: 1.4rem;
-      margin-bottom: 30px;
-    }
-
-    #restart {
-      padding: 15px 40px;
-      font-size: 1.4rem;
-      background: linear-gradient(var(--accent-cyan), var(--accent-blue));
-      border: none;
-      border-radius: 30px;
-      color: white;
-      cursor: pointer;
-      box-shadow: var(--shadow-soft), 0 0 15px var(--accent-cyan);
-      transition: transform 0.3s;
-    }
-    #restart:hover { transform: scale(1.05); }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="nebula"></div>
-  <div class="stars-bg">
-    <div class="star-layer"></div>
-    <div class="star-layer"></div>
-    <div class="star-layer"></div>
-  </div>
-  <div id="shooting-stars"></div>
+<div id="floating-container"></div>
 
-  <div id="intro">
-    <div id="intro-title">Janani's Galaxy Odyssey</div>
-    <button id="start-btn">Embark on Adventure ✨</button>
-  </div>
+<div id="container">
+  <div class="progress"><div id="progress-fill" class="progress-fill"></div></div>
 
-  <div id="hud" style="display:none;">
-    <div class="hud-item" id="score-hud">Score: 0</div>
-    <div class="hud-item" id="power-hud">Power: None</div>
-    <div class="hud-item" id="level-hud">Level: 1</div>
-    <div class="hud-item" id="time-hud">Time: 60</div>
-  </div>
+  <!-- ──────────────────────────────────────────────── -->
+  <!--                    SCREENS                      -->
+  <!-- ──────────────────────────────────────────────── -->
 
-  <div id="progress-bar" style="display:none;">
-    <div id="progress-fill" style="width:100%;"></div>
+  <div id="intro" class="screen active">
+    <div class="emoji-big">💖✨</div>
+    <h1>Bestie Sparkle Quest</h1>
+    <p style="font-size:1.1rem; line-height:1.6; margin:1.4em 0;">
+      Hey sunshine! 🌸<br>
+      I made this long-distance treasure hunt just for <strong>us</strong> 💕<br>
+      Solve cute mini-games → unlock our special message
+    </p>
+    <button onclick="startQuest()">✨ Begin Adventure ✨</button>
   </div>
 
-  <div id="level-transition" style="display:none;">
-    <div id="level-title">Level 1</div>
-    <div id="level-goal">Collect 10 orbs to advance! Beware of enemies.</div>
-    <button id="next-btn">Ready! 🚀</button>
+  <!-- Level 1 ─ Riddle ──────────────────────────────────── -->
+  <div id="l1" class="screen">
+    <h2>🌷 Whisper Garden</h2>
+    <p>We always finish each other's…</p>
+    <div class="clue-box">________</div>
+    <input id="riddle-in" placeholder="your guess…" autocomplete="off"/>
+    <button onclick="checkRiddle()">Check 💭</button>
+    <p id="l1-fb"></p>
   </div>
 
-  <div id="final">
-    <div id="final-title"></div>
-    <div id="final-score"></div>
-    <button id="restart">Play Again</button>
+  <!-- Level 2 ─ Memory ──────────────────────────────────── -->
+  <div id="l2" class="screen">
+    <h2>🌼 Memory Meadow</h2>
+    <p>Match the friendship emojis!</p>
+    <div id="memory-grid" class="card-grid"></div>
+    <p id="l2-fb"></p>
   </div>
 
-  <script>
-    // High score
-    let highScore = localStorage.getItem('jananiHigh') || 0;
+  <!-- Level 3 ─ Simon ───────────────────────────────────── -->
+  <div id="l3" class="screen">
+    <h2>🌹 Rhythm Roses</h2>
+    <p>Watch → repeat the glowing hearts 💓</p>
+    <div class="grid-4" id="simon-grid">
+      <div class="pad" data-id="0" style="background:#ff79c6"></div>
+      <div class="pad" data-id="1" style="background:#ff4da6"></div>
+      <div class="pad" data-id="2" style="background:#a2f2e9"></div>
+      <div class="pad" data-id="3" style="background:#fff76a"></div>
+    </div>
+    <p id="simon-msg">Watch carefully…</p>
+    <p id="l3-fb"></p>
+  </div>
 
-    // Game state
-    let score = 0;
-    let currentLevel = 1;
-    let maxLevels = 5;
-    let timeLeft = 0;
-    let baseTime = 60;
-    let powerEnd = 0;
-    let gameActive = false;
-    let entities = [];
-    let spawnIntervals = [];
+  <!-- Level 4 ─ Quiz ────────────────────────────────────── -->
+  <div id="l4" class="screen">
+    <h2>💎 Bestie Quiz</h2>
+    <div id="quiz-q"></div>
+    <div id="quiz-btns" style="display:flex; flex-direction:column; gap:0.8em; margin:1.6em auto; max-width:360px;"></div>
+    <p id="l4-fb"></p>
+  </div>
 
-    const intro = document.getElementById('intro');
-    const hud = document.getElementById('hud');
-    const scoreHud = document.getElementById('score-hud');
-    const powerHud = document.getElementById('power-hud');
-    const levelHud = document.getElementById('level-hud');
-    const timeHud = document.getElementById('time-hud');
-    const progressBar = document.getElementById('progress-bar');
-    const progressFill = document.getElementById('progress-fill');
-    const levelTransition = document.getElementById('level-transition');
-    const levelTitle = document.getElementById('level-title');
-    const levelGoal = document.getElementById('level-goal');
-    const nextBtn = document.getElementById('next-btn');
-    const final = document.getElementById('final');
-    const finalTitle = document.getElementById('final-title');
-    const finalScore = document.getElementById('final-score');
-    const restart = document.getElementById('restart');
-    const startBtn = document.getElementById('start-btn');
+  <!-- Level 5 ─ Unscramble ──────────────────────────────── -->
+  <div id="l5" class="screen">
+    <h2>🪄 Magic Scroll</h2>
+    <div class="clue-box" style="font-size:1.3rem; letter-spacing:2px; text-align:center;">
+      E S T B   S D I E N R F S   A E R   O R E F V E R 💖
+    </div>
+    <input id="unscr-in" placeholder="unscramble here…"/>
+    <button onclick="checkUnscramble()">Reveal 💌</button>
+    <p id="l5-fb"></p>
+  </div>
 
-    // Background enhancements
-    function addTwinkleStar() {
-      const s = document.createElement('div');
-      s.className = 'star';
-      const sz = Math.random()*2 + 0.5;
-      s.style.width = s.style.height = sz+'px';
-      s.style.left = Math.random()*100+'%';
-      s.style.top  = Math.random()*100+'%';
-      const dur = Math.random()*5 + 3;
-      s.style.animation = `star-twinkle ${dur}s ${Math.random()*dur}s infinite`;
-      document.body.appendChild(s);
+  <!-- Level 6 ─ Hangman ─────────────────────────────────── -->
+  <div id="l6" class="screen">
+    <h2>🎭 Friendship Hangman</h2>
+    <div id="hang-word" style="font-size:2.2rem; letter-spacing:6px; margin:1.4em 0; min-height:2.8rem;"></div>
+    <div id="hang-letters" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(38px,1fr)); gap:0.6em; max-width:420px; margin:1.2em auto;"></div>
+    <p id="hang-left">Guesses left: 6</p>
+    <p id="l6-fb"></p>
+  </div>
+
+  <!-- Level 7 ─ RPS ─────────────────────────────────────── -->
+  <div id="l7" class="screen">
+    <h2>🤜✂️ Rock–Paper–Scissors</h2>
+    <p>Best of 3 against your bestie AI! 😘</p>
+    <div style="font-size:4.5rem; display:flex; justify-content:center; gap:1.6em; margin:1.8em 0;">
+      <span onclick="playRPS('rock')">🪨</span>
+      <span onclick="playRPS('paper')">📄</span>
+      <span onclick="playRPS('scissors')">✂️</span>
+    </div>
+    <p id="rps-live"></p>
+    <p id="rps-score">You 0 – AI 0</p>
+    <p id="l7-fb"></p>
+  </div>
+
+  <!-- Level 8 ─ Maze (simple touch/arrows) ─────────────── -->
+  <div id="l8" class="screen">
+    <h2>🗺️ Heart Maze</h2>
+    <p>Swipe or use arrows → reach green heart!</p>
+    <div id="maze-area" style="width:260px; height:260px; margin:1.8em auto; position:relative; background:#f9f0f5; border:3px solid var(--pink-2); border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.1);"></div>
+    <p id="l8-fb"></p>
+  </div>
+
+  <!-- Level 9 ─ Number Guess ───────────────────────────── -->
+  <div id="l9" class="screen">
+    <h2>🔮 Guess My Number</h2>
+    <p>1–100 • 10 tries • friendship vibes only 💕</p>
+    <input id="guess-in" type="number" min="1" max="100" placeholder="your guess"/>
+    <button onclick="submitGuess()">Guess! ✨</button>
+    <p id="guess-hint"></p>
+    <p id="guess-left">Tries left: 10</p>
+    <p id="l9-fb"></p>
+  </div>
+
+  <!-- Ending ────────────────────────────────────────────── -->
+  <div id="end" class="screen">
+    <div class="emoji-big">🎉💖🎉</div>
+    <h1>You Did It!!!</h1>
+    <p class="level-win">Our friendship shines brighter than all the stars 🌟</p>
+    <p style="font-size:1.15rem; line-height:1.7; margin:1.8em 0;">
+      Even with so many kilometers between us,<br>
+      you're still my favorite notification every day.<br><br>
+      <strong>Love you forever & always 💕</strong>
+    </p>
+    <button onclick="resetGame()">Play Again ♡</button>
+  </div>
+</div>
+
+<script>
+// ────────────────────────────────────────────────
+//  CONFIG & STATE
+// ────────────────────────────────────────────────
+
+const LEVELS = ['intro','l1','l2','l3','l4','l5','l6','l7','l8','l9','end'];
+let current = 0;
+
+let memoryState  = { cards:[], flipped:[], matched:0 };
+let simonState   = { seq:[], player:[], playing:false, index:0 };
+let quizState    = { idx:0 };
+let hangState    = { word:'', display:[], wrongs:0, guessed:new Set() };
+let rpsState     = { you:0, ai:0 };
+let mazeState    = { x:20, y:20, goalX:220, goalY:220 };
+let guessState   = { number:0, tries:10 };
+
+const QUIZ = [
+  { q:"We finish each other's…",            a:0, opts:["sentences","sandwiches","playlists"] },
+  { q:"Best friends are like stars because…",a:1, opts:["they sometimes fall","they shine together","they sleep during day"] },
+  { q:"Distance means so little when someone means…", a:1, opts:["nothing","so much","pizza"] }
+];
+
+const HANG_WORDS = ["BESTIE","FOREVER","LAUGHTER","HUGS","SPARKLE","MEMORIES"];
+
+// ────────────────────────────────────────────────
+//  UTILITIES
+// ────────────────────────────────────────────────
+
+function $(id) { return document.getElementById(id); }
+
+function show(n) {
+  document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
+  $(LEVELS[n]).classList.add('active');
+  if (n===2) initMemory();
+  if (n===3) initSimon();
+  if (n===4) initQuiz();
+  if (n===6) initHangman();
+  if (n===7) initRPS();
+  if (n===8) initMaze();
+  if (n===9) initGuess();
+}
+
+function save() { localStorage.setItem("bestieQuest", current); }
+function load() {
+  const v = localStorage.getItem("bestieQuest");
+  if (v) { current = +v; show(current); }
+  else show(0);
+  updateBar();
+}
+
+function updateBar() {
+  $('progress-fill').style.width = (current / (LEVELS.length-2) * 100) + '%';
+}
+
+function winLevel() {
+  confettiBurst();
+  setTimeout(()=>{
+    current = Math.min(current+1, LEVELS.length-1);
+    show(current);
+    save();
+    updateBar();
+  }, 1800);
+}
+
+function confettiBurst() {
+  const c = document.createElement('canvas');
+  c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;';
+  document.body.appendChild(c);
+  const ctx = c.getContext('2d');
+  c.width = innerWidth; c.height = innerHeight;
+  const parts = [];
+  for(let i=0;i<120;i++){
+    parts.push({
+      x:Math.random()*c.width, y:Math.random()*c.height-c.height,
+      vx:(Math.random()-0.5)*7, vy:Math.random()*6+3,
+      r:Math.random()*5+3, rot:Math.random()*360, rs:(Math.random()-0.5)*12,
+      c:['#ff79c6','#ff4da6','#a2f2e9','#fff76a'][i%4]
+    });
+  }
+  let f=0;
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    parts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.09; p.rot+=p.rs;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.c; ctx.fillRect(-p.r,-p.r,p.r*2,p.r*2); ctx.restore();
+    });
+    if (++f<100) requestAnimationFrame(draw); else c.remove();
+  }
+  draw();
+}
+
+// ────────────────────────────────────────────────
+//  GAME LOGIC
+// ────────────────────────────────────────────────
+
+function startQuest(){
+  current=1; show(1); save(); updateBar();
+}
+
+function checkRiddle(){
+  const v = $('riddle-in').value.trim().toLowerCase();
+  const fb = $('l1-fb');
+  if(v.includes('sentence') || v.includes('sentences')){
+    fb.innerHTML = "<span class='level-win'>Yesss bestie!! 💬✨</span>";
+    winLevel();
+  } else {
+    fb.textContent = "Hmm… one more try? 😘";
+  }
+}
+
+// ── Memory ───────────────────────────────────────────
+function initMemory(){
+  const sym = ['💖','💕','🌸','🦋','✨','🌟','🍰','🎀'];
+  const pair = [...sym, ...sym].sort(()=>Math.random()-0.5);
+  const grid = $('memory-grid');
+  grid.innerHTML='';
+  memoryState = {cards:[], flipped:[], matched:0};
+  pair.forEach((s,i)=>{
+    const c = document.createElement('div');
+    c.className='card';
+    c.dataset.val=s;
+    c.onclick=()=>flipMemory(c);
+    grid.appendChild(c);
+    memoryState.cards.push(c);
+  });
+  $('l2-fb').textContent='';
+}
+
+function flipMemory(card){
+  if(memoryState.flipped.length>=2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  card.textContent = card.dataset.val;
+  memoryState.flipped.push(card);
+  if(memoryState.flipped.length===2) setTimeout(checkMemory, 700);
+}
+
+function checkMemory(){
+  const [a,b] = memoryState.flipped;
+  if(a.dataset.val === b.dataset.val){
+    a.classList.add('matched'); b.classList.add('matched');
+    memoryState.matched++;
+    if(memoryState.matched === 8) {
+      $('l2-fb').innerHTML = "<span class='level-win'>All matched! Magic! 🌈</span>";
+      winLevel();
     }
-    for(let i=0; i<250; i++) addTwinkleStar();
+  } else {
+    a.classList.remove('flipped'); b.classList.remove('flipped');
+    a.textContent=''; b.textContent='';
+  }
+  memoryState.flipped = [];
+}
 
-    function shootStar() {
-      const el = document.createElement('div');
-      el.className = 'shooting-star';
-      el.style.left = Math.random()*40 + '%';
-      el.style.top  = Math.random()*30 + '%';
-      const dur = Math.random()*3 + 4;
-      el.style.animationDuration = dur + 's';
-      el.style.animationDelay = Math.random()*5 + 's';
-      document.getElementById('shooting-stars').appendChild(el);
-      setTimeout(()=>el.remove(), (dur+5)*1000);
+// ── Simon ────────────────────────────────────────────
+function initSimon(){
+  simonState = {seq:Array(8).fill(0).map(()=>Math.floor(Math.random()*4)), player:[], playing:false, index:0};
+  $('simon-msg').textContent = "Watch…";
+  $('l3-fb').textContent = "";
+  setTimeout(playSimon, 800);
+}
+
+function playSimon(){
+  simonState.playing=true; simonState.player=[]; simonState.index=0;
+  let i=0;
+  const iv = setInterval(()=>{
+    if(i<simonState.seq.length){
+      lightPad(simonState.seq[i++]);
+    } else {
+      clearInterval(iv);
+      simonState.playing=false;
+      $('simon-msg').textContent = "Your turn! Tap same order 💓";
     }
-    setInterval(shootStar, 7000 + Math.random()*8000);
-    shootStar();
+  }, 680);
+}
 
-    // Input
-    function getPos(e) {
-      const t = e.touches ? e.touches[0] : e;
-      return {x: t.clientX, y: t.clientY};
+function lightPad(id){
+  const p = document.querySelector(`.pad[data-id="${id}"]`);
+  p.classList.add('lit');
+  setTimeout(()=>p.classList.remove('lit'), 420);
+}
+
+document.addEventListener('click',e=>{
+  const t = e.target;
+  if(!t.classList.contains('pad') || simonState.playing) return;
+  const id = +t.dataset.id;
+  simonState.player.push(id);
+  lightPad(id);
+  if(simonState.player[simonState.player.length-1] !== simonState.seq[simonState.player.length-1]){
+    $('l3-fb').textContent = "Oops… let's try again 💕";
+    setTimeout(initSimon,1200);
+    return;
+  }
+  if(simonState.player.length === simonState.seq.length){
+    $('l3-fb').innerHTML = "<span class='level-win'>Perfect rhythm! 🎶</span>";
+    winLevel();
+  }
+});
+
+// ── Quiz ─────────────────────────────────────────────
+function initQuiz(){
+  quizState.idx=0;
+  showQuizQ();
+}
+
+function showQuizQ(){
+  const q = QUIZ[quizState.idx];
+  $('quiz-q').innerHTML = `<p style="font-size:1.2rem; margin-bottom:1.4em;">${q.q}</p>`;
+  const cnt = $('quiz-btns');
+  cnt.innerHTML='';
+  q.opts.forEach((txt,i)=>{
+    const b = document.createElement('button');
+    b.textContent = txt;
+    b.onclick=()=>checkQuiz(i);
+    cnt.appendChild(b);
+  });
+  $('l4-fb').textContent='';
+}
+
+function checkQuiz(i){
+  const q = QUIZ[quizState.idx];
+  if(i===q.a){
+    $('l4-fb').textContent = "Exactly bestie!! 🥰";
+    if(++quizState.idx >= QUIZ.length){
+      winLevel();
+    } else {
+      setTimeout(showQuizQ,900);
     }
+  } else {
+    $('l4-fb').textContent = "Hmm… which one feels more like us? 💭";
+  }
+}
 
-    function createSmoke(x,y) {
-      const s = document.createElement('div');
-      s.className = 'smoke';
-      s.style.left = (x-20)+'px';
-      s.style.top  = (y-20)+'px';
-      document.body.appendChild(s);
-      setTimeout(()=>s.remove(), 1200);
+// ── Unscramble ───────────────────────────────────────
+function checkUnscramble(){
+  const v = $('unscr-in').value.trim().toLowerCase().replace(/\s+/g,' ');
+  if(v.includes('best friends are forever')){
+    $('l5-fb').innerHTML = "<span class='level-win'>Forever & always! 💞</span>";
+    winLevel();
+  } else {
+    $('l5-fb').textContent = "Almost… try again ♡";
+  }
+}
+
+// ── Hangman ──────────────────────────────────────────
+function initHangman(){
+  hangState.word = HANG_WORDS[Math.floor(Math.random()*HANG_WORDS.length)];
+  hangState.display = Array(hangState.word.length).fill('_');
+  hangState.wrongs=0; hangState.guessed.clear();
+  $('hang-word').textContent = hangState.display.join('  ');
+  $('hang-left').textContent = "Guesses left: 6";
+  $('l6-fb').textContent = "";
+  const box = $('hang-letters');
+  box.innerHTML='';
+  for(let i=65;i<=90;i++){
+    const l = String.fromCharCode(i);
+    const el = document.createElement('div');
+    el.textContent=l;
+    el.style.cssText='padding:8px 12px; background:var(--pink-1); color:white; border-radius:10px; font-weight:600; cursor:pointer; text-align:center;';
+    el.onclick=()=>guessLetter(l,el);
+    box.appendChild(el);
+  }
+}
+
+function guessLetter(l,el){
+  if(hangState.guessed.has(l)) return;
+  hangState.guessed.add(l);
+  el.style.background='#ccc'; el.style.cursor='default';
+  if(hangState.word.includes(l)){
+    for(let i=0;i<hangState.word.length;i++){
+      if(hangState.word[i]===l) hangState.display[i]=l;
     }
-
-    function createExplosion(x,y,color=`hsl(${Math.random()*360},95%,65%)`) {
-      for(let i=0;i<22;i++){
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = x+'px';
-        p.style.top  = y+'px';
-        p.style.background = color;
-        const ang = Math.random()*Math.PI*2;
-        const dist = Math.random()*100 + 40;
-        p.style.setProperty('--dx', Math.cos(ang)*dist+'px');
-        p.style.setProperty('--dy', Math.sin(ang)*dist+'px');
-        document.body.appendChild(p);
-        setTimeout(()=>p.remove(), 1000);
-      }
+    $('hang-word').textContent = hangState.display.join('  ');
+    if(!hangState.display.includes('_')){
+      $('l6-fb').innerHTML = "<span class='level-win'>You saved the word! 🎉</span>";
+      winLevel();
     }
-
-    document.addEventListener('mousemove', e => createSmoke(e.clientX, e.clientY));
-    document.addEventListener('touchmove', e => {
-      e.preventDefault();
-      createSmoke(e.touches[0].clientX, e.touches[0].clientY);
-    }, {passive:false});
-
-    document.addEventListener('click', e => handleInteraction(getPos(e)));
-    document.addEventListener('touchstart', e => {
-      e.preventDefault();
-      handleInteraction(getPos(e));
-    }, {passive:false});
-
-    function handleInteraction({x,y}) {
-      if (!gameActive) return;
-
-      createExplosion(x,y);
-
-      entities = entities.filter(ent => {
-        const entCenterX = ent.x + ent.w / 2;
-        const entCenterY = ent.y + ent.h / 2;
-        if (Math.hypot(entCenterX - x, entCenterY - y) < 45) {
-          const expColor = ent.type === 'orb' ? 'cyan' : ent.type === 'power' ? 'gold' : 'red';
-          createExplosion(entCenterX, entCenterY, expColor);
-
-          if (ent.type === 'orb') {
-            score += Date.now() < powerEnd ? 2 : 1;
-          } else if (ent.type === 'power') {
-            powerEnd = Date.now() + 8000; // Longer power in higher levels
-          } else if (ent.type === 'enemy') {
-            score = Math.max(0, score - (currentLevel + 1));
-          }
-
-          ent.el.remove();
-          updateHUD();
-          checkProgress();
-          return false;
-        }
-        return true;
-      });
+  } else {
+    hangState.wrongs++;
+    $('hang-left').textContent = `Guesses left: ${6-hangState.wrongs}`;
+    if(hangState.wrongs>=6){
+      $('l6-fb').textContent = `It was ${hangState.word}… one more try?`;
+      setTimeout(initHangman,1600);
     }
+  }
+}
 
-    // Spawning
-    function spawn(type) {
-      const className = type === 'power' ? 'power-up' : type;
-      const el = document.createElement('div');
-      el.className = className;
-      const size = type === 'orb' ? 60 : type === 'power' ? 48 : 55;
-      el.style.left = Math.random() * (innerWidth - size - 20) + 10 + 'px';
-      el.style.top = Math.random() * (innerHeight - size - 120) + 60 + 'px';
-      document.body.appendChild(el);
+// ── RPS ──────────────────────────────────────────────
+function initRPS(){
+  rpsState = {you:0, ai:0};
+  $('rps-live').textContent='';
+  $('rps-score').textContent='You 0 – AI 0';
+  $('l7-fb').textContent='';
+}
 
-      const ent = {el, x: parseFloat(el.style.left), y: parseFloat(el.style.top), w: size, h: size, type};
+function playRPS(move){
+  const opts=['rock','paper','scissors'];
+  const ai = opts[Math.floor(Math.random()*3)];
+  let res='';
+  if(move===ai) res='Tie~';
+  else if(
+    (move==='rock'&&ai==='scissors') ||
+    (move==='paper'&&ai==='rock') ||
+    (move==='scissors'&&ai==='paper')
+  ){
+    res='You win this round! 💪';
+    rpsState.you++;
+  } else {
+    res='I got this one 😏';
+    rpsState.ai++;
+  }
+  $('rps-live').textContent = `You: ${move} • AI: ${ai} → ${res}`;
+  $('rps-score').textContent = `You ${rpsState.you} – AI ${rpsState.ai}`;
+  if(rpsState.you>=2 || rpsState.ai>=2){
+    const msg = rpsState.you>=2 ? "<span class='level-win'>You won the battle! 🏆</span>" : "Rematch? 😉";
+    $('l7-fb').innerHTML = msg;
+    if(rpsState.you>=2) winLevel();
+    else setTimeout(initRPS,1400);
+  }
+}
 
-      if (type === 'enemy') {
-        ent.speed = (currentLevel * 0.5) + 1;
-        ent.direction = Math.random() * Math.PI * 2;
-        ent.interval = setInterval(() => moveEnemy(ent), 50);
-      }
+// ── Maze ─────────────────────────────────────────────
+function initMaze(){
+  mazeState.x=20; mazeState.y=20;
+  const area = $('maze-area');
+  area.innerHTML = `
+    <div id="maze-player" style="width:24px;height:24px;background:var(--pink-2);border-radius:50%;position:absolute;left:20px;top:20px;transition:all 0.18s;"></div>
+    <div style="width:24px;height:24px;background:#a2f2e9;border-radius:50%;position:absolute;left:${mazeState.goalX}px;top:${mazeState.goalY}px;"></div>
+  `;
+  // Very simple walls – feel free to expand
+  const walls = [
+    {l:80,t:0,w:24,h:120},
+    {l:0,t:80,w:140,h:24},
+    {l:180,t:60,w:24,h:140},
+    {l:120,t:160,w:100,h:24}
+  ];
+  walls.forEach(w=>{
+    const div=document.createElement('div');
+    div.style.cssText=`position:absolute;left:${w.l}px;top:${w.t}px;width:${w.w}px;height:${w.h}px;background:var(--pink-3);border-radius:6px;`;
+    area.appendChild(div);
+  });
+  $('l8-fb').textContent = "";
 
-      entities.push(ent);
-
-      // Float animation
-      if (type !== 'power') {
-        el.animate([
-          {transform: 'translate(0,0)'},
-          {transform: `translate(${Math.random()*20-10}px, ${Math.random()*20-10}px)`}
-        ], {duration: 2500 + Math.random()*3000, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out'});
-      }
-
-      // Auto-despawn power-ups
-      if (type === 'power') setTimeout(() => removeEntity(ent), 12000);
+  let sx,sy;
+  area.addEventListener('touchstart',e=>{ 
+    e.preventDefault(); 
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY; 
+  });
+  area.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    if(!sx) return;
+    const dx = e.touches[0].clientX - sx;
+    const dy = e.touches[0].clientY - sy;
+    if(Math.abs(dx)>Math.abs(dy)){
+      if(dx>30) movePlayer('right');
+      else if(dx<-30) movePlayer('left');
+    } else {
+      if(dy>30) movePlayer('down');
+      else if(dy<-30) movePlayer('up');
     }
+    sx=sy=null;
+  });
+}
 
-    function moveEnemy(ent) {
-      if (!gameActive || !entities.includes(ent)) return;
+function movePlayer(dir){
+  const step=26;
+  let nx=mazeState.x, ny=mazeState.y;
+  if(dir==='up')    ny-=step;
+  if(dir==='down')  ny+=step;
+  if(dir==='left')  nx-=step;
+  if(dir==='right') nx+=step;
 
-      ent.x += Math.cos(ent.direction) * ent.speed;
-      ent.y += Math.sin(ent.direction) * ent.speed;
+  if(nx<0||ny<0||nx+24>260||ny+24>260) return;
 
-      if (ent.x < 0 || ent.x > innerWidth - ent.w || ent.y < 50 || ent.y > innerHeight - ent.h - 50) {
-        ent.direction += Math.PI / 2 + Math.random() * Math.PI; // Bounce
-      }
+  // very basic wall check – improve if needed
+  if((nx>70&&nx<110&&ny<120&&ny+24>0) ||   // first wall
+     (nx<140&&ny>70&&ny<110) ||            // second
+     (nx>170&&nx<210&&ny>50) ||            // third
+     (nx>110&&nx<220&&ny>150&&ny<180)) return; // fourth
 
-      ent.el.style.left = ent.x + 'px';
-      ent.el.style.top = ent.y + 'px';
-    }
+  mazeState.x=nx; mazeState.y=ny;
+  $('maze-player').style.left=nx+'px';
+  $('maze-player').style.top =ny+'px';
 
-    function removeEntity(ent) {
-      if (entities.includes(ent)) {
-        ent.el.remove();
-        if (ent.interval) clearInterval(ent.interval);
-        entities = entities.filter(e => e !== ent);
-      }
-    }
+  if(Math.abs(nx-mazeState.goalX)<10 && Math.abs(ny-mazeState.goalY)<10){
+    $('l8-fb').innerHTML = "<span class='level-win'>You found our meeting point! 💕</span>";
+    winLevel();
+  }
+}
 
-    // HUD update
-    function updateHUD() {
-      scoreHud.textContent = `Score: ${score}`;
-      powerHud.textContent = `Power: ${Date.now() < powerEnd ? 'Double Points' : 'None'}`;
-      levelHud.textContent = `Level: ${currentLevel}`;
-      timeHud.textContent = `Time: ${Math.ceil(timeLeft)}`;
-      progressFill.style.width = `${(timeLeft / (baseTime + (currentLevel - 1) * 10)) * 100}%`;
-    }
+// ── Guess Number ─────────────────────────────────────
+function initGuess(){
+  guessState.number = Math.floor(Math.random()*100)+1;
+  guessState.tries=10;
+  $('guess-hint').textContent='';
+  $('guess-left').textContent='Tries left: 10';
+  $('l9-fb').textContent='';
+}
 
-    // Progress check
-    function checkProgress() {
-      const targetScore = currentLevel * 15 + 5; // Increasing difficulty
-      if (score >= targetScore && currentLevel < maxLevels) {
-        endLevel(true);
-      }
-    }
+function submitGuess(){
+  const v = +$('guess-in').value;
+  if(!v||v<1||v>100){
+    $('guess-hint').textContent="Number 1–100 please 💭";
+    return;
+  }
+  guessState.tries--;
+  $('guess-left').textContent=`Tries left: ${guessState.tries}`;
+  if(v===guessState.number){
+    $('guess-hint').innerHTML = "<span class='level-win'>You read my mind! 🔮</span>";
+    winLevel();
+  } else if(guessState.tries<=0){
+    $('guess-hint').textContent=`It was ${guessState.number}… again?`;
+    setTimeout(initGuess,1600);
+  } else {
+    $('guess-hint').textContent = v<guessState.number ? "Higher ↑" : "Lower ↓";
+  }
+  $('guess-in').value='';
+}
 
-    // Timer
-    let timerInterval;
-    function startTimer() {
-      timeLeft = baseTime + (currentLevel - 1) * 10;
-      updateHUD();
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        updateHUD();
-        if (timeLeft <= 0) {
-          endLevel(false);
-        }
-      }, 1000);
-    }
+// ────────────────────────────────────────────────
+//  START
+// ────────────────────────────────────────────────
 
-    // Level management
-    function startLevel() {
-      gameActive = true;
-      hud.style.display = 'flex';
-      progressBar.style.display = 'block';
-      levelTransition.classList.remove('visible');
+function resetGame(){
+  localStorage.removeItem("bestieQuest");
+  current=0;
+  show(0);
+  updateBar();
+}
 
-      // Difficulty scaling
-      const orbSpawnRate = 1800 - currentLevel * 200;
-      const powerSpawnRate = 10000 - currentLevel * 1000;
-      const enemySpawnRate = currentLevel >= 2 ? 6000 - currentLevel * 800 : 0;
+// Floating hearts
+for(let i=0;i<14;i++){
+  const h=document.createElement('div');
+  h.className='floating';
+  h.textContent = ['💗','💖','✨','🌸','💕'][Math.floor(Math.random()*5)];
+  h.style.left = Math.random()*100 + '%';
+  h.style.animationDuration = (10+Math.random()*12)+'s';
+  h.style.animationDelay  = Math.random()*6 + 's';
+  $('floating-container').appendChild(h);
+}
 
-      spawnIntervals.push(setInterval(() => spawn('orb'), orbSpawnRate));
-      spawnIntervals.push(setInterval(() => { if (Math.random() < 0.3 + currentLevel*0.05) spawn('power'); }, powerSpawnRate));
-      if (enemySpawnRate > 0) spawnIntervals.push(setInterval(() => { if (Math.random() < 0.4 + currentLevel*0.1) spawn('enemy'); }, enemySpawnRate));
-
-      startTimer();
-    }
-
-    function endLevel(success) {
-      gameActive = false;
-      clearInterval(timerInterval);
-      spawnIntervals.forEach(clearInterval);
-      spawnIntervals = [];
-      entities.forEach(removeEntity);
-      entities = [];
-
-      if (!success) {
-        showFinal(false);
-        return;
-      }
-
-      currentLevel++;
-      if (currentLevel > maxLevels) {
-        showFinal(true);
-        return;
-      }
-
-      levelTitle.textContent = `Level ${currentLevel}`;
-      levelGoal.textContent = `Collect ${currentLevel * 15 + 5} points. More enemies and faster pace!`;
-      levelTransition.classList.add('visible');
-    }
-
-    function showFinal(won) {
-      if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('jananiHigh', highScore);
-      }
-
-      final.style.display = 'flex';
-      finalTitle.textContent = won ? 'Galaxy Conquered! 🌌' : 'Mission Failed ⏰';
-      finalScore.innerHTML = `Score: ${score}<br>High Score: ${highScore}<br>${won ? 'You\'re a Cosmic Legend! 😎' : 'Better luck next time!'}`;
-      celebrate(won);
-    }
-
-    function celebrate(won) {
-      if (won) {
-        setInterval(() => createExplosion(Math.random()*innerWidth, Math.random()*innerHeight, 'gold'), 250);
-      }
-    }
-
-    // Event listeners
-    startBtn.onclick = () => {
-      intro.classList.add('hidden');
-      levelTransition.style.display = 'flex';
-      levelTransition.classList.add('visible');
-    };
-
-    nextBtn.onclick = startLevel;
-
-    restart.onclick = () => {
-      final.style.display = 'none';
-      score = 0;
-      currentLevel = 1;
-      intro.classList.remove('hidden');
-    };
-
-  </script>
+load();
+</script>
 </body>
 </html>
