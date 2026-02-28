@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bestie Sparkle Quest – Deluxe Edition 💖✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bestie Sparkle Quest – Mobile Edition 💖✨</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,785 +16,490 @@
       --yellow: #fff76a;
       --purple: #d0aaff;
       --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #f5e1fd 50%, #e0f7fa 100%);
-      --card-bg: rgba(255,255,255,0.88);
-      --shadow-soft: 0 12px 32px rgba(255,105,180,0.22);
-      --shadow-glow: 0 0 28px rgba(255, 105, 180, 0.35);
+      --card-bg: rgba(255,255,255,0.92);
     }
 
     * {
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     body {
-      font-family: 'Poppins', system-ui, sans-serif;
+      font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       background: var(--bg-gradient);
       background-size: 300% 300%;
       animation: gradientFlow 18s ease infinite;
       color: #333;
       overflow-x: hidden;
-      position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes gradientFlow {
-      0%   {background-position:0% 50%}
-      50%  {background-position:100% 50%}
+      0% {background-position:0% 50%}
+      50% {background-position:100% 50%}
       100% {background-position:0% 50%}
     }
 
-    .floating {
-      position: fixed;
-      font-size: clamp(1.4rem, 5vw, 3.2rem);
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.7;
-      animation: floatUp linear infinite;
-    }
-
-    @keyframes floatUp {
-      0%   { transform: translateY(110vh) rotate(0deg);   opacity:0; }
-      10%  { opacity:0.7; }
-      90%  { opacity:0.7; }
-      100% { transform: translateY(-20vh) rotate(720deg); opacity:0; }
-    }
-
     #container {
-      width:  min(94vw, 520px);
+      width: min(94vw, 480px);
       margin: 2vh auto;
       background: var(--card-bg);
-      backdrop-filter: blur(14px);
-      border-radius: 28px;
-      box-shadow: var(--shadow-soft), inset 0 0 0 1px rgba(255,255,255,0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(255,105,180,0.15);
       overflow: hidden;
-      position: relative;
+      flex-grow: 0;
+      display: flex;
+      flex-direction: column;
     }
 
-    .progress {
-      height: 8px;
-      background: rgba(255,255,255,0.4);
-    }
-
+    .progress { height: 6px; background: rgba(0,0,0,0.05); }
     .progress-fill {
-      height: 100%;
-      width: 0%;
+      height: 100%; width: 0%;
       background: linear-gradient(90deg, var(--pink-1), var(--pink-3));
-      transition: width 0.9s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: 0 0 16px var(--pink-1);
+      transition: width 0.5s ease;
     }
 
     .screen {
       display: none;
-      padding: clamp(20px, 6vw, 36px) clamp(16px, 5vw, 28px);
+      padding: 25px 20px;
       text-align: center;
-      animation: screenFade 0.6s ease-out;
+      animation: fadeIn 0.4s ease-out;
     }
-
     .active { display: block; }
 
-    @keyframes screenFade {
-      from { opacity:0; transform:translateY(30px); }
-      to   { opacity:1; transform:translateY(0);   }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-    h1 {
-      font-size: clamp(2.1rem, 7vw, 3.4rem);
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--pink-1), var(--pink-3), var(--purple));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.4em;
-      text-shadow: 0 4px 20px rgba(255,105,180,0.3);
-    }
-
-    h2 {
-      font-size: clamp(1.5rem, 5vw, 2.1rem);
-      color: var(--pink-2);
-      margin: 0.6em 0 0.8em;
-    }
-
-    .emoji-big { font-size: clamp(2.8rem, 9vw, 5.2rem); margin: 0.3em 0; }
+    h1 { font-size: 1.8rem; margin-bottom: 10px; color: var(--pink-3); }
+    h2 { font-size: 1.4rem; color: var(--pink-2); margin-bottom: 15px; }
 
     button {
       background: linear-gradient(135deg, var(--pink-1), var(--pink-3));
-      color: white;
-      border: none;
-      padding: clamp(14px,4vw,18px) clamp(28px,7vw,42px);
-      border-radius: 999px;
-      font-size: clamp(1rem, 4vw, 1.18rem);
-      font-weight: 600;
-      margin: 0.8em 0.5em;
-      cursor: pointer;
-      box-shadow: 0 8px 24px rgba(255,105,180,0.4);
-      transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
-      position: relative;
-      overflow: hidden;
+      color: white; border: none;
+      padding: 15px 30px; border-radius: 50px;
+      font-size: 1rem; font-weight: 600;
+      margin: 10px 5px; cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255,105,180,0.3);
+    }
+    button:active { transform: scale(0.95); }
+
+    input {
+      width: 90%; padding: 12px; border: 2px solid var(--pink-1);
+      border-radius: 25px; text-align: center; font-size: 1rem;
+      margin: 15px 0; outline: none;
     }
 
-    button::after {
-      content:"";
-      position:absolute;
-      top:0; left:-100%;
-      width:100%; height:100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-      transition: left 0.6s;
-    }
-
-    button:hover::after { left:100%; }
-    button:hover     { transform: translateY(-4px) scale(1.06); box-shadow: 0 14px 36px rgba(255,105,180,0.55); }
-    button:active    { transform: scale(0.96); }
-
-    input, .guess-input {
-      width: 86%;
-      max-width: 380px;
-      padding: 14px 20px;
-      margin: 1.2em auto;
-      border: 2px solid #ffb3d9;
-      border-radius: 999px;
-      font-size: 1.05rem;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: var(--pink-2);
-      box-shadow: 0 0 0 4px rgba(255,105,180,0.25);
-    }
-
-    .clue-box {
-      background: rgba(255,240,245,0.7);
-      border-left: 5px solid var(--pink-2);
-      padding: 1.2em 1.4em;
-      margin: 1.4em 0;
-      border-radius: 16px;
-      text-align: left;
-      font-style: italic;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    }
-
-    .grid-4  { display:grid; grid-template-columns: repeat(2,1fr); gap:1.1rem; max-width:340px; margin:1.8em auto; }
-    .pad     { aspect-ratio:1; border-radius:50%; position:relative; box-shadow:0 6px 20px rgba(0,0,0,0.18); transition:all 0.25s; }
-    .pad.lit { transform:scale(1.14); box-shadow:0 0 40px #fff, inset 0 0 30px rgba(255,255,255,0.7); filter:brightness(1.3); }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
-      gap: 1rem;
-      max-width: 92vw;
-      margin: 1.6em auto;
-    }
-
+    /* Game Grids */
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 15px auto; }
     .card {
-      aspect-ratio: 1;
-      background: white;
-      border: 3px solid #ffb3d9;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.4rem;
-      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-      cursor: pointer;
-      user-select: none;
+      aspect-ratio: 1; background: white; border: 2px solid #ffb3d9;
+      border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem;
+    }
+    .card.flipped { background: var(--pink-1); color: white; border-color: white; }
+
+    .simon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 280px; margin: 20px auto; }
+    .pad { aspect-ratio: 1; border-radius: 20px; opacity: 0.6; }
+    .pad.lit { opacity: 1; transform: scale(1.05); box-shadow: 0 0 20px white; }
+
+    /* Maze Mobile Optimization */
+    #maze-area {
+      width: 280px; height: 280px; margin: 10px auto;
+      background: #fffafa; border: 3px solid var(--pink-1);
+      position: relative; border-radius: 15px; overflow: hidden;
     }
 
-    .card.flipped  { transform: rotateY(180deg) scale(1.06); background: linear-gradient(135deg, var(--pink-1), var(--pink-3)); color:white; border-color:white; }
-    .card.matched  { background: linear-gradient(135deg, #a2f2e9, #7df2e2) !important; border-color:#4ade80; transform:scale(1.1); }
+    /* Game Logic Styles */
+    #catch-area { width: 100%; height: 250px; background: rgba(255,255,255,0.4); border-radius: 15px; position: relative; overflow: hidden; }
+    #player-bucket { position: absolute; bottom: 5px; font-size: 2.5rem; transition: left 0.1s linear; transform: translateX(-50%); }
+    .falling-heart { position: absolute; font-size: 1.5rem; }
 
-    .level-win {
-      font-size: 1.5rem;
-      color: var(--pink-2);
-      font-weight: 700;
-      margin: 1.2em 0;
-      animation: pulse 1.6s infinite;
+    #bubble-area { width: 100%; height: 250px; background: rgba(255,255,255,0.3); position: relative; overflow: hidden; border-radius: 15px; }
+    .bubble { position: absolute; font-size: 2rem; cursor: pointer; transition: top 3s linear; }
+
+    /* Final Screen Specifics */
+    .quote-box {
+      font-style: italic;
+      line-height: 1.6;
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 4px solid var(--pink-1);
+      background: rgba(255, 255, 255, 0.5);
+      font-size: 1.1rem;
+      color: #444;
     }
 
-    @keyframes pulse {
-      0%,100% { transform:scale(1);   text-shadow:0 0 12px #ffd1dc; }
-      50%     { transform:scale(1.08); text-shadow:0 0 28px var(--pink-1); }
-    }
-
-    @media (min-width: 600px) {
-      #container    { margin:4vh auto; border-radius:36px; }
-      .grid-4       { grid-template-columns: repeat(2,1fr); max-width:420px; }
-      .card-grid    { grid-template-columns: repeat(4,1fr); max-width:460px; }
+    .floating { position: fixed; pointer-events: none; z-index: -1; animation: floatUp linear infinite; }
+    @keyframes floatUp {
+      0% { transform: translateY(110vh); opacity: 0; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-<div id="floating-container"></div>
+<div id="floating-hearts"></div>
 
 <div id="container">
   <div class="progress"><div id="progress-fill" class="progress-fill"></div></div>
 
-  <!-- ──────────────────────────────────────────────── -->
-  <!--                    SCREENS                      -->
-  <!-- ──────────────────────────────────────────────── -->
-
-  <div id="intro" class="screen active">
-    <div class="emoji-big">💖✨</div>
+  <!-- Screens -->
+  <div id="s0" class="screen active">
+    <div style="font-size: 4rem;">💖</div>
     <h1>Bestie Sparkle Quest</h1>
-    <p style="font-size:1.1rem; line-height:1.6; margin:1.4em 0;">
-      Hey sunshine! 🌸<br>
-      I made this long-distance treasure hunt just for <strong>us</strong> 💕<br>
-      Solve cute mini-games → unlock our special message
-    </p>
-    <button onclick="startQuest()">✨ Begin Adventure ✨</button>
+    <p>A 14-level journey created just for you. Ready to unlock the secret message?</p>
+    <button onclick="next()">✨ Start ✨</button>
   </div>
 
-  <!-- Level 1 ─ Riddle ──────────────────────────────────── -->
-  <div id="l1" class="screen">
-    <h2>🌷 Whisper Garden</h2>
-    <p>We always finish each other's…</p>
-    <div class="clue-box">________</div>
-    <input id="riddle-in" placeholder="your guess…" autocomplete="off"/>
-    <button onclick="checkRiddle()">Check 💭</button>
-    <p id="l1-fb"></p>
+  <div id="s1" class="screen">
+    <h2>🌷 Whisper Riddle</h2>
+    <p>We finish each other's...</p>
+    <input id="in1" placeholder="Type here..." />
+    <button onclick="check1()">Check 💭</button>
   </div>
 
-  <!-- Level 2 ─ Memory ──────────────────────────────────── -->
-  <div id="l2" class="screen">
+  <div id="s2" class="screen">
     <h2>🌼 Memory Meadow</h2>
-    <p>Match the friendship emojis!</p>
     <div id="memory-grid" class="card-grid"></div>
-    <p id="l2-fb"></p>
   </div>
 
-  <!-- Level 3 ─ Simon ───────────────────────────────────── -->
-  <div id="l3" class="screen">
+  <div id="s3" class="screen">
     <h2>🌹 Rhythm Roses</h2>
-    <p>Watch → repeat the glowing hearts 💓</p>
-    <div class="grid-4" id="simon-grid">
-      <div class="pad" data-id="0" style="background:#ff79c6"></div>
-      <div class="pad" data-id="1" style="background:#ff4da6"></div>
-      <div class="pad" data-id="2" style="background:#a2f2e9"></div>
-      <div class="pad" data-id="3" style="background:#fff76a"></div>
+    <p id="simon-msg">Watch the sequence...</p>
+    <div class="simon-grid">
+      <div class="pad" id="p0" style="background:var(--pink-1)" onclick="padTap(0)"></div>
+      <div class="pad" id="p1" style="background:var(--pink-3)" onclick="padTap(1)"></div>
+      <div class="pad" id="p2" style="background:var(--mint)" onclick="padTap(2)"></div>
+      <div class="pad" id="p3" style="background:var(--yellow)" onclick="padTap(3)"></div>
     </div>
-    <p id="simon-msg">Watch carefully…</p>
-    <p id="l3-fb"></p>
   </div>
 
-  <!-- Level 4 ─ Quiz ────────────────────────────────────── -->
-  <div id="l4" class="screen">
+  <div id="s4" class="screen">
     <h2>💎 Bestie Quiz</h2>
-    <div id="quiz-q"></div>
-    <div id="quiz-btns" style="display:flex; flex-direction:column; gap:0.8em; margin:1.6em auto; max-width:360px;"></div>
-    <p id="l4-fb"></p>
+    <p id="q-text">Who is the best bestie in the world?</p>
+    <div id="q-btns" style="display:flex; flex-direction:column;"></div>
   </div>
 
-  <!-- Level 5 ─ Unscramble ──────────────────────────────── -->
-  <div id="l5" class="screen">
+  <div id="s5" class="screen">
     <h2>🪄 Magic Scroll</h2>
-    <div class="clue-box" style="font-size:1.3rem; letter-spacing:2px; text-align:center;">
-      E S T B   S D I E N R F S   A E R   O R E F V E R 💖
+    <p>E S T B  S D I E N R F S</p>
+    <input id="in5" placeholder="Unscramble..." />
+    <button onclick="check5()">Solve 💌</button>
+  </div>
+
+  <div id="s6" class="screen">
+    <h2>🎭 Hangman</h2>
+    <div id="h-word" style="font-size:1.8rem; margin:20px 0; letter-spacing:4px;"></div>
+    <div id="h-keys" style="display:flex; flex-wrap:wrap; justify-content:center; gap:5px;"></div>
+  </div>
+
+  <div id="s7" class="screen">
+    <h2>🤜 RPS Battle</h2>
+    <p>Win 2 rounds to pass!</p>
+    <div style="font-size:3rem; margin:20px 0;">
+      <span onclick="playRps('🪨')">🪨</span>
+      <span onclick="playRps('📄')">📄</span>
+      <span onclick="playRps('✂️')">✂️</span>
     </div>
-    <input id="unscr-in" placeholder="unscramble here…"/>
-    <button onclick="checkUnscramble()">Reveal 💌</button>
-    <p id="l5-fb"></p>
+    <p id="rps-res">You 0 - AI 0</p>
   </div>
 
-  <!-- Level 6 ─ Hangman ─────────────────────────────────── -->
-  <div id="l6" class="screen">
-    <h2>🎭 Friendship Hangman</h2>
-    <div id="hang-word" style="font-size:2.2rem; letter-spacing:6px; margin:1.4em 0; min-height:2.8rem;"></div>
-    <div id="hang-letters" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(38px,1fr)); gap:0.6em; max-width:420px; margin:1.2em auto;"></div>
-    <p id="hang-left">Guesses left: 6</p>
-    <p id="l6-fb"></p>
-  </div>
-
-  <!-- Level 7 ─ RPS ─────────────────────────────────────── -->
-  <div id="l7" class="screen">
-    <h2>🤜✂️ Rock–Paper–Scissors</h2>
-    <p>Best of 3 against your bestie AI! 😘</p>
-    <div style="font-size:4.5rem; display:flex; justify-content:center; gap:1.6em; margin:1.8em 0;">
-      <span onclick="playRPS('rock')">🪨</span>
-      <span onclick="playRPS('paper')">📄</span>
-      <span onclick="playRPS('scissors')">✂️</span>
-    </div>
-    <p id="rps-live"></p>
-    <p id="rps-score">You 0 – AI 0</p>
-    <p id="l7-fb"></p>
-  </div>
-
-  <!-- Level 8 ─ Maze (simple touch/arrows) ─────────────── -->
-  <div id="l8" class="screen">
+  <div id="s8" class="screen">
     <h2>🗺️ Heart Maze</h2>
-    <p>Swipe or use arrows → reach green heart!</p>
-    <div id="maze-area" style="width:260px; height:260px; margin:1.8em auto; position:relative; background:#f9f0f5; border:3px solid var(--pink-2); border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.1);"></div>
-    <p id="l8-fb"></p>
+    <p>Tap the path to guide the flower!</p>
+    <div id="maze-area" onclick="winMaze()">
+      <div style="position:absolute; top:10px; left:10px;">🌸</div>
+      <div style="position:absolute; bottom:10px; right:10px;">💖</div>
+      <div style="position:absolute; top:40%; left:0; width:70%; height:10px; background:var(--pink-1);"></div>
+    </div>
   </div>
 
-  <!-- Level 9 ─ Number Guess ───────────────────────────── -->
-  <div id="l9" class="screen">
-    <h2>🔮 Guess My Number</h2>
-    <p>1–100 • 10 tries • friendship vibes only 💕</p>
-    <input id="guess-in" type="number" min="1" max="100" placeholder="your guess"/>
-    <button onclick="submitGuess()">Guess! ✨</button>
-    <p id="guess-hint"></p>
-    <p id="guess-left">Tries left: 10</p>
-    <p id="l9-fb"></p>
+  <div id="s9" class="screen">
+    <h2>🔮 Number Guess</h2>
+    <input type="number" id="in9" placeholder="1-100" />
+    <button onclick="check9()">Guess ✨</button>
+    <p id="hint9"></p>
   </div>
 
-  <!-- Ending ────────────────────────────────────────────── -->
+  <div id="s10" class="screen">
+    <h2>🧺 Catch Hearts</h2>
+    <p>Tap left or right to move the basket!</p>
+    <div id="catch-area" onclick="moveBasket(event)">
+      <div id="player-bucket">🧺</div>
+    </div>
+    <p id="c-score">Score: 0/5</p>
+  </div>
+
+  <div id="s11" class="screen">
+    <h2>💘 Rapid Tap</h2>
+    <p>Tap the heart 10 times fast!</p>
+    <div id="tap-heart" onclick="heartTap()" style="font-size:5rem; margin:30px 0; transition:0.1s;">❤️</div>
+    <p id="tap-count">0/10</p>
+  </div>
+
+  <div id="s12" class="screen">
+    <h2>🫧 Bubble Pop</h2>
+    <p>Pop 5 sparkles ✨ (Avoid 💣)</p>
+    <div id="bubble-area"></div>
+    <p id="b-score">Sparkles: 0/5</p>
+  </div>
+
+  <div id="s13" class="screen">
+    <h2>🎨 Color Match</h2>
+    <p>Pick the color of the text:</p>
+    <h3 id="color-name" style="font-size:2rem; margin:15px;">PINK</h3>
+    <div id="color-btns" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+  </div>
+
+  <div id="s14" class="screen">
+    <h2>🧩 Final Unlock</h2>
+    <p>Me + You = ?</p>
+    <input id="in14" placeholder="One word..." />
+    <button onclick="check14()">Finish Quest 🔓</button>
+  </div>
+
   <div id="end" class="screen">
-    <div class="emoji-big">🎉💖🎉</div>
-    <h1>You Did It!!!</h1>
-    <p class="level-win">Our friendship shines brighter than all the stars 🌟</p>
-    <p style="font-size:1.15rem; line-height:1.7; margin:1.8em 0;">
-      Even with so many kilometers between us,<br>
-      you're still my favorite notification every day.<br><br>
-      <strong>Love you forever & always 💕</strong>
-    </p>
-    <button onclick="resetGame()">Play Again ♡</button>
+    <div style="font-size:4rem; margin-bottom:10px;">🏆</div>
+    <h1>Quest Complete!</h1>
+    <div class="quote-box">
+      "A best friend is someone who makes you laugh even when you think you'll never smile again. They are the ones who walk in when the rest of the world walks out."
+    </div>
+    <p style="font-weight: 600; color: var(--pink-3); margin-top: 10px;">You're my forever bestie! 💕✨</p>
+    <button onclick="location.reload()">Replay ♡</button>
   </div>
 </div>
 
 <script>
-// ────────────────────────────────────────────────
-//  CONFIG & STATE
-// ────────────────────────────────────────────────
+  let level = 0;
+  const totalLevels = 15;
+  const $ = id => document.getElementById(id);
 
-const LEVELS = ['intro','l1','l2','l3','l4','l5','l6','l7','l8','l9','end'];
-let current = 0;
+  function next() {
+    level++;
+    updateUI();
+  }
 
-let memoryState  = { cards:[], flipped:[], matched:0 };
-let simonState   = { seq:[], player:[], playing:false, index:0 };
-let quizState    = { idx:0 };
-let hangState    = { word:'', display:[], wrongs:0, guessed:new Set() };
-let rpsState     = { you:0, ai:0 };
-let mazeState    = { x:20, y:20, goalX:220, goalY:220 };
-let guessState   = { number:0, tries:10 };
+  function updateUI() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    let screenId = level === totalLevels ? 'end' : 's' + level;
+    $(screenId).classList.add('active');
+    $('progress-fill').style.width = (level / (totalLevels - 1) * 100) + '%';
+    initLevel();
+  }
 
-const QUIZ = [
-  { q:"We finish each other's…",            a:0, opts:["sentences","sandwiches","playlists"] },
-  { q:"Best friends are like stars because…",a:1, opts:["they sometimes fall","they shine together","they sleep during day"] },
-  { q:"Distance means so little when someone means…", a:1, opts:["nothing","so much","pizza"] }
-];
+  function initLevel() {
+    if(level === 2) initMemory();
+    if(level === 3) initSimon();
+    if(level === 4) initQuiz();
+    if(level === 6) initHangman();
+    if(level === 10) initCatch();
+    if(level === 12) initBubbles();
+    if(level === 13) initColor();
+  }
 
-const HANG_WORDS = ["BESTIE","FOREVER","LAUGHTER","HUGS","SPARKLE","MEMORIES"];
+  // --- Games ---
 
-// ────────────────────────────────────────────────
-//  UTILITIES
-// ────────────────────────────────────────────────
+  // L1: Riddle
+  function check1() { if($('in1').value.toLowerCase().includes('sentence')) next(); }
 
-function $(id) { return document.getElementById(id); }
-
-function show(n) {
-  document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
-  $(LEVELS[n]).classList.add('active');
-  if (n===2) initMemory();
-  if (n===3) initSimon();
-  if (n===4) initQuiz();
-  if (n===6) initHangman();
-  if (n===7) initRPS();
-  if (n===8) initMaze();
-  if (n===9) initGuess();
-}
-
-function save() { localStorage.setItem("bestieQuest", current); }
-function load() {
-  const v = localStorage.getItem("bestieQuest");
-  if (v) { current = +v; show(current); }
-  else show(0);
-  updateBar();
-}
-
-function updateBar() {
-  $('progress-fill').style.width = (current / (LEVELS.length-2) * 100) + '%';
-}
-
-function winLevel() {
-  confettiBurst();
-  setTimeout(()=>{
-    current = Math.min(current+1, LEVELS.length-1);
-    show(current);
-    save();
-    updateBar();
-  }, 1800);
-}
-
-function confettiBurst() {
-  const c = document.createElement('canvas');
-  c.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;';
-  document.body.appendChild(c);
-  const ctx = c.getContext('2d');
-  c.width = innerWidth; c.height = innerHeight;
-  const parts = [];
-  for(let i=0;i<120;i++){
-    parts.push({
-      x:Math.random()*c.width, y:Math.random()*c.height-c.height,
-      vx:(Math.random()-0.5)*7, vy:Math.random()*6+3,
-      r:Math.random()*5+3, rot:Math.random()*360, rs:(Math.random()-0.5)*12,
-      c:['#ff79c6','#ff4da6','#a2f2e9','#fff76a'][i%4]
+  // L2: Memory
+  function initMemory() {
+    const icons = ['🌸','🌸','💖','💖','🐱','🐱','🍰','🍰'];
+    const shuffled = icons.sort(() => 0.5 - Math.random());
+    const grid = $('memory-grid'); grid.innerHTML = '';
+    let flipped = [];
+    shuffled.forEach(icon => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = () => {
+        if(flipped.length < 2 && !card.classList.contains('flipped')) {
+          card.textContent = icon; card.classList.add('flipped');
+          flipped.push(card);
+          if(flipped.length === 2) {
+            if(flipped[0].textContent === flipped[1].textContent) {
+              flipped = [];
+              if(document.querySelectorAll('.flipped').length === 8) next();
+            } else {
+              setTimeout(() => { flipped.forEach(c => {c.classList.remove('flipped'); c.textContent=''}); flipped=[]; }, 600);
+            }
+          }
+        }
+      };
+      grid.appendChild(card);
     });
   }
-  let f=0;
-  function draw(){
-    ctx.clearRect(0,0,c.width,c.height);
-    parts.forEach(p=>{
-      p.x+=p.vx; p.y+=p.vy; p.vy+=0.09; p.rot+=p.rs;
-      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
-      ctx.fillStyle=p.c; ctx.fillRect(-p.r,-p.r,p.r*2,p.r*2); ctx.restore();
+
+  // L3: Simon
+  let simonSeq = [];
+  let userSeq = [];
+  function initSimon() {
+    simonSeq = [0,1,2,3].sort(() => 0.5 - Math.random());
+    userSeq = [];
+    let i = 0;
+    $('simon-msg').textContent = "Watch carefully...";
+    const interval = setInterval(() => {
+      if(level !== 3) { clearInterval(interval); return; }
+      const p = $('p' + simonSeq[i]);
+      if(p) {
+        p.classList.add('lit');
+        setTimeout(() => p.classList.remove('lit'), 400);
+      }
+      i++;
+      if(i >= 4) { clearInterval(interval); $('simon-msg').textContent = "Your turn!"; }
+    }, 800);
+  }
+  function padTap(id) {
+    if($('simon-msg').textContent !== "Your turn!") return;
+    const p = $('p' + id); p.classList.add('lit'); setTimeout(() => p.classList.remove('lit'), 200);
+    userSeq.push(id);
+    if(userSeq[userSeq.length-1] !== simonSeq[userSeq.length-1]) initSimon();
+    else if(userSeq.length === 4) next();
+  }
+
+  // L4: Quiz
+  function initQuiz() {
+    const btns = $('q-btns'); btns.innerHTML = '';
+    ['My Mom', 'My Boss', 'YOU!'].forEach((text, i) => {
+      const b = document.createElement('button');
+      b.textContent = text;
+      b.onclick = () => { if(i === 2) next(); };
+      btns.appendChild(b);
     });
-    if (++f<100) requestAnimationFrame(draw); else c.remove();
   }
-  draw();
-}
 
-// ────────────────────────────────────────────────
-//  GAME LOGIC
-// ────────────────────────────────────────────────
+  // L5: Unscramble
+  function check5() { if($('in5').value.toLowerCase().replace(/\s/g,'').includes('bestfriends')) next(); }
 
-function startQuest(){
-  current=1; show(1); save(); updateBar();
-}
-
-function checkRiddle(){
-  const v = $('riddle-in').value.trim().toLowerCase();
-  const fb = $('l1-fb');
-  if(v.includes('sentence') || v.includes('sentences')){
-    fb.innerHTML = "<span class='level-win'>Yesss bestie!! 💬✨</span>";
-    winLevel();
-  } else {
-    fb.textContent = "Hmm… one more try? 😘";
+  // L6: Hangman
+  function initHangman() {
+    const word = "GALAXY";
+    let guessed = [];
+    const draw = () => {
+      $('h-word').textContent = word.split('').map(l => guessed.includes(l) ? l : '_').join(' ');
+      if(!$('h-word').textContent.includes('_')) next();
+    };
+    $('h-keys').innerHTML = '';
+    "GABCLXYZ".split('').forEach(l => {
+      const b = document.createElement('button'); b.textContent = l;
+      b.onclick = () => { guessed.push(l); b.disabled = true; b.style.opacity = 0.5; draw(); };
+      $('h-keys').appendChild(b);
+    });
+    draw();
   }
-}
 
-// ── Memory ───────────────────────────────────────────
-function initMemory(){
-  const sym = ['💖','💕','🌸','🦋','✨','🌟','🍰','🎀'];
-  const pair = [...sym, ...sym].sort(()=>Math.random()-0.5);
-  const grid = $('memory-grid');
-  grid.innerHTML='';
-  memoryState = {cards:[], flipped:[], matched:0};
-  pair.forEach((s,i)=>{
-    const c = document.createElement('div');
-    c.className='card';
-    c.dataset.val=s;
-    c.onclick=()=>flipMemory(c);
-    grid.appendChild(c);
-    memoryState.cards.push(c);
-  });
-  $('l2-fb').textContent='';
-}
-
-function flipMemory(card){
-  if(memoryState.flipped.length>=2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-  card.classList.add('flipped');
-  card.textContent = card.dataset.val;
-  memoryState.flipped.push(card);
-  if(memoryState.flipped.length===2) setTimeout(checkMemory, 700);
-}
-
-function checkMemory(){
-  const [a,b] = memoryState.flipped;
-  if(a.dataset.val === b.dataset.val){
-    a.classList.add('matched'); b.classList.add('matched');
-    memoryState.matched++;
-    if(memoryState.matched === 8) {
-      $('l2-fb').innerHTML = "<span class='level-win'>All matched! Magic! 🌈</span>";
-      winLevel();
-    }
-  } else {
-    a.classList.remove('flipped'); b.classList.remove('flipped');
-    a.textContent=''; b.textContent='';
+  // L7: RPS
+  let rScore = 0;
+  function playRps(move) {
+    const moves = ['🪨','📄','✂️'];
+    const ai = moves[Math.floor(Math.random()*3)];
+    if((move==='🪨'&&ai==='✂️')||(move==='📄'&&ai==='🪨')||(move==='✂️'&&ai==='📄')) rScore++;
+    $('rps-res').textContent = `AI chose ${ai}. Score: ${rScore}/2`;
+    if(rScore >= 2) next();
   }
-  memoryState.flipped = [];
-}
 
-// ── Simon ────────────────────────────────────────────
-function initSimon(){
-  simonState = {seq:Array(8).fill(0).map(()=>Math.floor(Math.random()*4)), player:[], playing:false, index:0};
-  $('simon-msg').textContent = "Watch…";
-  $('l3-fb').textContent = "";
-  setTimeout(playSimon, 800);
-}
+  // L8: Maze
+  function winMaze() { next(); }
 
-function playSimon(){
-  simonState.playing=true; simonState.player=[]; simonState.index=0;
-  let i=0;
-  const iv = setInterval(()=>{
-    if(i<simonState.seq.length){
-      lightPad(simonState.seq[i++]);
-    } else {
-      clearInterval(iv);
-      simonState.playing=false;
-      $('simon-msg').textContent = "Your turn! Tap same order 💓";
-    }
-  }, 680);
-}
-
-function lightPad(id){
-  const p = document.querySelector(`.pad[data-id="${id}"]`);
-  p.classList.add('lit');
-  setTimeout(()=>p.classList.remove('lit'), 420);
-}
-
-document.addEventListener('click',e=>{
-  const t = e.target;
-  if(!t.classList.contains('pad') || simonState.playing) return;
-  const id = +t.dataset.id;
-  simonState.player.push(id);
-  lightPad(id);
-  if(simonState.player[simonState.player.length-1] !== simonState.seq[simonState.player.length-1]){
-    $('l3-fb').textContent = "Oops… let's try again 💕";
-    setTimeout(initSimon,1200);
-    return;
+  // L9: Number Guess
+  let targetNum = Math.floor(Math.random()*100);
+  function check9() {
+    const g = parseInt($('in9').value);
+    if(g === targetNum) next();
+    else $('hint9').textContent = g < targetNum ? "Higher!" : "Lower!";
   }
-  if(simonState.player.length === simonState.seq.length){
-    $('l3-fb').innerHTML = "<span class='level-win'>Perfect rhythm! 🎶</span>";
-    winLevel();
+
+  // L10: Catch
+  let cScore = 0;
+  function initCatch() {
+    cScore = 0; $('c-score').textContent = "Score: 0/5";
+    const spawn = setInterval(() => {
+      if(level !== 10 || cScore >= 5) { clearInterval(spawn); return; }
+      const h = document.createElement('div'); h.className = 'falling-heart'; h.textContent = '💖';
+      let x = Math.random() * 80 + 10; h.style.left = x + '%'; h.style.top = '0px';
+      $('catch-area').appendChild(h);
+      let y = 0;
+      const fall = setInterval(() => {
+        y += 3; h.style.top = y + 'px';
+        const rect = $('player-bucket').getBoundingClientRect();
+        const hRect = h.getBoundingClientRect();
+        if(hRect.bottom > rect.top && hRect.left < rect.right && hRect.right > rect.left) {
+          cScore++; $('c-score').textContent = `Score: ${cScore}/5`;
+          h.remove(); clearInterval(fall);
+          if(cScore >= 5) next();
+        }
+        if(y > 250) { if(h.parentNode) h.remove(); clearInterval(fall); }
+      }, 20);
+    }, 1200);
   }
-});
-
-// ── Quiz ─────────────────────────────────────────────
-function initQuiz(){
-  quizState.idx=0;
-  showQuizQ();
-}
-
-function showQuizQ(){
-  const q = QUIZ[quizState.idx];
-  $('quiz-q').innerHTML = `<p style="font-size:1.2rem; margin-bottom:1.4em;">${q.q}</p>`;
-  const cnt = $('quiz-btns');
-  cnt.innerHTML='';
-  q.opts.forEach((txt,i)=>{
-    const b = document.createElement('button');
-    b.textContent = txt;
-    b.onclick=()=>checkQuiz(i);
-    cnt.appendChild(b);
-  });
-  $('l4-fb').textContent='';
-}
-
-function checkQuiz(i){
-  const q = QUIZ[quizState.idx];
-  if(i===q.a){
-    $('l4-fb').textContent = "Exactly bestie!! 🥰";
-    if(++quizState.idx >= QUIZ.length){
-      winLevel();
-    } else {
-      setTimeout(showQuizQ,900);
-    }
-  } else {
-    $('l4-fb').textContent = "Hmm… which one feels more like us? 💭";
+  function moveBasket(e) {
+    const rect = $('catch-area').getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const x = ((clientX - rect.left) / rect.width) * 100;
+    $('player-bucket').style.left = Math.max(0, Math.min(100, x)) + '%';
   }
-}
 
-// ── Unscramble ───────────────────────────────────────
-function checkUnscramble(){
-  const v = $('unscr-in').value.trim().toLowerCase().replace(/\s+/g,' ');
-  if(v.includes('best friends are forever')){
-    $('l5-fb').innerHTML = "<span class='level-win'>Forever & always! 💞</span>";
-    winLevel();
-  } else {
-    $('l5-fb').textContent = "Almost… try again ♡";
+  // L11: Tap
+  let taps = 0;
+  function heartTap() {
+    taps++; $('tap-count').textContent = `${taps}/10`;
+    $('tap-heart').style.transform = "scale(1.3)";
+    setTimeout(() => $('tap-heart').style.transform = "scale(1)", 100);
+    if(taps >= 10) next();
   }
-}
 
-// ── Hangman ──────────────────────────────────────────
-function initHangman(){
-  hangState.word = HANG_WORDS[Math.floor(Math.random()*HANG_WORDS.length)];
-  hangState.display = Array(hangState.word.length).fill('_');
-  hangState.wrongs=0; hangState.guessed.clear();
-  $('hang-word').textContent = hangState.display.join('  ');
-  $('hang-left').textContent = "Guesses left: 6";
-  $('l6-fb').textContent = "";
-  const box = $('hang-letters');
-  box.innerHTML='';
-  for(let i=65;i<=90;i++){
-    const l = String.fromCharCode(i);
-    const el = document.createElement('div');
-    el.textContent=l;
-    el.style.cssText='padding:8px 12px; background:var(--pink-1); color:white; border-radius:10px; font-weight:600; cursor:pointer; text-align:center;';
-    el.onclick=()=>guessLetter(l,el);
-    box.appendChild(el);
+  // L12: Bubbles
+  let bScore = 0;
+  function initBubbles() {
+    bScore = 0; $('b-score').textContent = "Sparkles: 0/5";
+    const spawn = setInterval(() => {
+      if(level !== 12 || bScore >= 5) { clearInterval(spawn); return; }
+      const b = document.createElement('div');
+      const isBomb = Math.random() > 0.7;
+      b.className = 'bubble'; b.textContent = isBomb ? '💣' : '✨';
+      b.style.left = Math.random() * 85 + '%'; b.style.top = '250px';
+      $('bubble-area').appendChild(b);
+      setTimeout(() => b.style.top = '-50px', 10);
+      b.onclick = () => {
+        if(isBomb) { bScore = 0; initBubbles(); }
+        else { bScore++; $('b-score').textContent = `Sparkles: ${bScore}/5`; b.remove(); if(bScore>=5) next(); }
+      };
+    }, 800);
   }
-}
 
-function guessLetter(l,el){
-  if(hangState.guessed.has(l)) return;
-  hangState.guessed.add(l);
-  el.style.background='#ccc'; el.style.cursor='default';
-  if(hangState.word.includes(l)){
-    for(let i=0;i<hangState.word.length;i++){
-      if(hangState.word[i]===l) hangState.display[i]=l;
-    }
-    $('hang-word').textContent = hangState.display.join('  ');
-    if(!hangState.display.includes('_')){
-      $('l6-fb').innerHTML = "<span class='level-win'>You saved the word! 🎉</span>";
-      winLevel();
-    }
-  } else {
-    hangState.wrongs++;
-    $('hang-left').textContent = `Guesses left: ${6-hangState.wrongs}`;
-    if(hangState.wrongs>=6){
-      $('l6-fb').textContent = `It was ${hangState.word}… one more try?`;
-      setTimeout(initHangman,1600);
-    }
+  // L13: Color
+  function initColor() {
+    const colors = ['#ff79c6', '#a2f2e9', '#fff76a', '#d0aaff'];
+    const names = ['PINK', 'MINT', 'YELLOW', 'PURPLE'];
+    const idx = Math.floor(Math.random()*4);
+    $('color-name').textContent = names[idx];
+    $('color-name').style.color = colors[Math.floor(Math.random()*4)];
+    $('color-btns').innerHTML = '';
+    colors.forEach((c, i) => {
+      const b = document.createElement('div');
+      b.style.cssText = `height:50px; background:${c}; border-radius:10px;`;
+      b.onclick = () => { if(i === idx) next(); else initColor(); };
+      $('color-btns').appendChild(b);
+    });
   }
-}
 
-// ── RPS ──────────────────────────────────────────────
-function initRPS(){
-  rpsState = {you:0, ai:0};
-  $('rps-live').textContent='';
-  $('rps-score').textContent='You 0 – AI 0';
-  $('l7-fb').textContent='';
-}
-
-function playRPS(move){
-  const opts=['rock','paper','scissors'];
-  const ai = opts[Math.floor(Math.random()*3)];
-  let res='';
-  if(move===ai) res='Tie~';
-  else if(
-    (move==='rock'&&ai==='scissors') ||
-    (move==='paper'&&ai==='rock') ||
-    (move==='scissors'&&ai==='paper')
-  ){
-    res='You win this round! 💪';
-    rpsState.you++;
-  } else {
-    res='I got this one 😏';
-    rpsState.ai++;
+  // L14: Final
+  function check14() { 
+    const val = $('in14').value.toLowerCase();
+    if(val.includes('forever') || val.includes('everything') || val.includes('love')) next(); 
   }
-  $('rps-live').textContent = `You: ${move} • AI: ${ai} → ${res}`;
-  $('rps-score').textContent = `You ${rpsState.you} – AI ${rpsState.ai}`;
-  if(rpsState.you>=2 || rpsState.ai>=2){
-    const msg = rpsState.you>=2 ? "<span class='level-win'>You won the battle! 🏆</span>" : "Rematch? 😉";
-    $('l7-fb').innerHTML = msg;
-    if(rpsState.you>=2) winLevel();
-    else setTimeout(initRPS,1400);
+
+  // Background effects
+  for(let i=0; i<10; i++){
+    const h = document.createElement('div'); h.className='floating'; h.textContent='💖';
+    h.style.left = Math.random()*100+'%'; h.style.fontSize = (Math.random()*20+15)+'px';
+    h.style.animationDuration = (Math.random()*5+5)+'s';
+    h.style.animationDelay = Math.random()*5+'s';
+    $('floating-hearts').appendChild(h);
   }
-}
-
-// ── Maze ─────────────────────────────────────────────
-function initMaze(){
-  mazeState.x=20; mazeState.y=20;
-  const area = $('maze-area');
-  area.innerHTML = `
-    <div id="maze-player" style="width:24px;height:24px;background:var(--pink-2);border-radius:50%;position:absolute;left:20px;top:20px;transition:all 0.18s;"></div>
-    <div style="width:24px;height:24px;background:#a2f2e9;border-radius:50%;position:absolute;left:${mazeState.goalX}px;top:${mazeState.goalY}px;"></div>
-  `;
-  // Very simple walls – feel free to expand
-  const walls = [
-    {l:80,t:0,w:24,h:120},
-    {l:0,t:80,w:140,h:24},
-    {l:180,t:60,w:24,h:140},
-    {l:120,t:160,w:100,h:24}
-  ];
-  walls.forEach(w=>{
-    const div=document.createElement('div');
-    div.style.cssText=`position:absolute;left:${w.l}px;top:${w.t}px;width:${w.w}px;height:${w.h}px;background:var(--pink-3);border-radius:6px;`;
-    area.appendChild(div);
-  });
-  $('l8-fb').textContent = "";
-
-  let sx,sy;
-  area.addEventListener('touchstart',e=>{ 
-    e.preventDefault(); 
-    sx=e.touches[0].clientX; sy=e.touches[0].clientY; 
-  });
-  area.addEventListener('touchmove',e=>{
-    e.preventDefault();
-    if(!sx) return;
-    const dx = e.touches[0].clientX - sx;
-    const dy = e.touches[0].clientY - sy;
-    if(Math.abs(dx)>Math.abs(dy)){
-      if(dx>30) movePlayer('right');
-      else if(dx<-30) movePlayer('left');
-    } else {
-      if(dy>30) movePlayer('down');
-      else if(dy<-30) movePlayer('up');
-    }
-    sx=sy=null;
-  });
-}
-
-function movePlayer(dir){
-  const step=26;
-  let nx=mazeState.x, ny=mazeState.y;
-  if(dir==='up')    ny-=step;
-  if(dir==='down')  ny+=step;
-  if(dir==='left')  nx-=step;
-  if(dir==='right') nx+=step;
-
-  if(nx<0||ny<0||nx+24>260||ny+24>260) return;
-
-  // very basic wall check – improve if needed
-  if((nx>70&&nx<110&&ny<120&&ny+24>0) ||   // first wall
-     (nx<140&&ny>70&&ny<110) ||            // second
-     (nx>170&&nx<210&&ny>50) ||            // third
-     (nx>110&&nx<220&&ny>150&&ny<180)) return; // fourth
-
-  mazeState.x=nx; mazeState.y=ny;
-  $('maze-player').style.left=nx+'px';
-  $('maze-player').style.top =ny+'px';
-
-  if(Math.abs(nx-mazeState.goalX)<10 && Math.abs(ny-mazeState.goalY)<10){
-    $('l8-fb').innerHTML = "<span class='level-win'>You found our meeting point! 💕</span>";
-    winLevel();
-  }
-}
-
-// ── Guess Number ─────────────────────────────────────
-function initGuess(){
-  guessState.number = Math.floor(Math.random()*100)+1;
-  guessState.tries=10;
-  $('guess-hint').textContent='';
-  $('guess-left').textContent='Tries left: 10';
-  $('l9-fb').textContent='';
-}
-
-function submitGuess(){
-  const v = +$('guess-in').value;
-  if(!v||v<1||v>100){
-    $('guess-hint').textContent="Number 1–100 please 💭";
-    return;
-  }
-  guessState.tries--;
-  $('guess-left').textContent=`Tries left: ${guessState.tries}`;
-  if(v===guessState.number){
-    $('guess-hint').innerHTML = "<span class='level-win'>You read my mind! 🔮</span>";
-    winLevel();
-  } else if(guessState.tries<=0){
-    $('guess-hint').textContent=`It was ${guessState.number}… again?`;
-    setTimeout(initGuess,1600);
-  } else {
-    $('guess-hint').textContent = v<guessState.number ? "Higher ↑" : "Lower ↓";
-  }
-  $('guess-in').value='';
-}
-
-// ────────────────────────────────────────────────
-//  START
-// ────────────────────────────────────────────────
-
-function resetGame(){
-  localStorage.removeItem("bestieQuest");
-  current=0;
-  show(0);
-  updateBar();
-}
-
-// Floating hearts
-for(let i=0;i<14;i++){
-  const h=document.createElement('div');
-  h.className='floating';
-  h.textContent = ['💗','💖','✨','🌸','💕'][Math.floor(Math.random()*5)];
-  h.style.left = Math.random()*100 + '%';
-  h.style.animationDuration = (10+Math.random()*12)+'s';
-  h.style.animationDelay  = Math.random()*6 + 's';
-  $('floating-container').appendChild(h);
-}
-
-load();
 </script>
 </body>
 </html>
